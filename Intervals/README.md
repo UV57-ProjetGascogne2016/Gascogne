@@ -16,6 +16,9 @@ This folder group work on calculating Set of Interval Vector:
  - test2.py use only test in C++ to compute all paving (option to not compute some boxes to gain speed)
 
  - sivia_comp.py clean example on how to call sivia computing function
+
+ - fusion_sivia.py testcase fusion unchanging image with the precedente sivia
+
 ----------------------
 How to use with pyIbex
 ----------------------

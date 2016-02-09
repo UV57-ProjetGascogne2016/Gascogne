@@ -22,63 +22,6 @@ def subMove(x,y,v,p,u,h):
     
     return x,y,v,p
 
-class test3:
-  def __init__(self, m):
-    self.l_m = m
-    self.Bp = IntervalVector(len(m), [0,100])
-    self.Bm = IntervalVector(len(m), [0,100])
-
-  def test2(self,x1):
-      for x in x1:
-        if x.is_subset(self.Bm[0]):
-          return True
-      return False
-  
-      
-  def testA(self, X,m):
-    Xm = max(Interval(0), sign( (X[0]-m[0].ub())*(X[0]-m[0].lb()))) * \
-              min(sqr(X[0]-m[0].lb()),sqr(X[0]-m[0].ub()) ) \
-            + max(Interval(0), sign( (X[1]-m[1].ub())*(X[1]-m[1].lb()))) \
-              * min(sqr(X[1]-m[1].lb()),sqr(X[1]-m[1].ub()) ) # f-(||[X]-m||²)
-
-    Xp = max(sqr(X[0]-m[0].lb()),sqr(X[0]-m[0].ub())) + \
-                  max(sqr(X[1]-m[1].lb()),sqr(X[1]-m[1].ub()))#f+(||[X]-m||²)
-      
-    Xub = Xm | Xp
-    if self.Bp[0].is_disjoint(Xub):
-      return IBOOL.OUT
-    elif Xub.is_subset(self.Bm[0]):
-      return IBOOL.IN
-    else:
-      
-      b1 = ( Xm - 100).is_subset(Interval(-1000, 0)) #[Xm]-100
-      B2 = ( 100 - Xp)#is_subset(IntervalVector(2, Interval(-1000, 0))) 100 - Xp
-      incl = False
-      if  B2.ub() < 0:
-          if (b1 ):
-            return IBOOL.MAYBE
-          else:
-            return IBOOL.OUT # OUT for faster computation
-      return IBOOL.UNK
-
-  def test(self, X):
-    res = []
-    for i,m in enumerate(self.l_m):
-      res.append(self.testA(X,m))
-    if IBOOL.IN in res:
-      return IBOOL.IN
-    if IBOOL.UNK in res:
-      return IBOOL.UNK
-    if IBOOL.MAYBE in res:
-      return IBOOL.MAYBE
-    test = True
-    for r in res:
-      test &= (r == IBOOL.OUT)
-    if test:
-      return IBOOL.OUT
-    return IBOOL.UNK
-
-
 def listBoxToDraw(boxes):
     drawable=[]
     for X in boxes:
