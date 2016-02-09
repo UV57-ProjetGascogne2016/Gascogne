@@ -23,7 +23,7 @@ class ClassTest:
         self.l_imgIntegral = imgIntegral
         
     def toPixels(self, x, y):
-        r"""get the value in the matrix imgIntegral at the position x, y in the interval world
+        r"""get the index (i,j) of the pixel coresponding to the position (x,y) in the real world
         """        
         i = round(x/pixelScale) + i0
         j = -round(y/pixelScale) + j0
@@ -46,18 +46,10 @@ class ClassTest:
 
     def test(self, X):
         r"""Inclusion test:
-        
-        inputs: -imgage Integral
-                - Box
         -------
         """
-#        if (X[0].ub() < 10) and (X[0].lb() > -20) and (X[1].ub() < 30) and (X[1].lb() > -40) :
-#            return IBOOL.IN
-#        else:
-#            return IBOOL.UNK
         try:
-            NumPixels, sizeBox = self.calculatBox(X)
-            print('try ok')            
+            NumPixels, sizeBox = self.calculatBox(X)       
             if (NumPixels == 0):
                 return IBOOL.OUT
             elif (NumPixels == sizeBox):
@@ -65,7 +57,6 @@ class ClassTest:
             else:
                 return IBOOL.UNK
         except:
-            print('try fail')   
             return IBOOL.UNK
 
 if __name__ == '__main__':
@@ -76,6 +67,7 @@ if __name__ == '__main__':
     
 #    cv2.namedWindow('img', cv2.WINDOW_AUTOSIZE )
 #    cv2.imshow('img',img)
+#    cv2.waitKey(0)
 
     j_max, i_max = imgIntegral.shape    
     X0 = IntervalVector([[-i0*pixelScale, (-i0+i_max-1)*pixelScale],[(j0-j_max+1)*pixelScale, j0*pixelScale]])
@@ -86,7 +78,5 @@ if __name__ == '__main__':
     vibes.setFigureProperties(dict(x=0, y=10, width=500, height=500))
     SIVIA(X0, pdc, epsilon)
     vibes.endDrawing()
-    
-    #cv2.waitKey(0)
     
     
