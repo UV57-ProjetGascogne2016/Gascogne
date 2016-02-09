@@ -15,7 +15,7 @@ import numpy as np
 # position of the origine frame pixel
 i0 = 500
 j0 = 100
-pixelScale = 10 # pixel/Km
+pixelScale = 10 # Km/pixel
 epsilon = 10*pixelScale
 
 class ClassTest:
