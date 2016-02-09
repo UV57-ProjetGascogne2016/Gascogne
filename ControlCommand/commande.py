@@ -50,13 +50,20 @@ class Robot:
         u_v = self.kp[0]*(vbar-self.V)+ np.random.normal(scale=0.1)
         u_theta = self.kp[1]*2*math.atan(math.tan(0.5*(thetabar-self.theta)))+ np.random.normal(scale=0.1)
         
-        # print(u_v)
-        # print(u_theta)
+        print("u_v :", u_v)
+        print("u_theta :", u_theta)
         
-        # if(u_v>100):
-        #      u_v=100
-        # if(u_theta>1):
-        #     u_theta=1
+        #Saturation acceleration
+        if(u_v>1):
+            u_v = 1
+        elif(u_v<0):
+            u_v = 0
+            
+        #Saturation en vitesse angulaire
+        if(u_theta>10):
+             u_theta = 10
+        elif(u_theta<-10):
+            u_theta = -10
         
         self.u = np.array([u_v,u_theta])
   
@@ -66,7 +73,7 @@ class Robot:
     def subMove(self):
         xp = self.V*math.cos(self.theta)
         yp = self.V*math.sin(self.theta)
-        Vp = self.u[0] -0.1*self.V
+        Vp = self.u[0] -1*self.V
         thetap = self.u[1]
 
          
@@ -159,7 +166,7 @@ if __name__ == '__main__':
     # simulation
     h=0.05
     listRobots = []
-    for i in range(0,4):
+    for i in range(0,1):
         listRobots.append(Robot(-4.0,45,0,0,h,i,'b'))
 
     vibes.beginDrawing()
@@ -174,12 +181,12 @@ if __name__ == '__main__':
             #Draw circle of position
             # print(rob.X[0])
             # print(rob.X[1])
-            vibes.drawCircle(rob.X[0], rob.X[1], 0.02, rob.couleur)
+            vibes.drawAUV(rob.X[0], rob.X[1], 0.2, rob.theta*180/math.pi, rob.couleur)
             
             #Determine next point
             delta = 2*rob.numero*math.pi/len(listRobots)
             nextX, nextV = traj(t,delta)
-            vibes.drawCircle(nextX[0],nextX[1], 0.01, 'r')
+            vibes.drawCircle(nextX[0],nextX[1], 0.005, 'r')
             
             # print(nextX)
             # print(nextV)
