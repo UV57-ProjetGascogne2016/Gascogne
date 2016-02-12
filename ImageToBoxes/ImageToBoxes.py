@@ -46,7 +46,6 @@ class ClassTest:
 
     def test(self, X):
         r"""Inclusion test:
-        -------
         """
         try:
             NumPixels, sizeBox = self.calculatBox(X)       
