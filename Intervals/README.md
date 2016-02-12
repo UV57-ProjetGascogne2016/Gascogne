@@ -17,9 +17,11 @@ This folder group work on calculating Set of Interval Vector:
 
  - sivia_comp.py clean example on how to call sivia computing function
 
- - fusion_sivia.py testcase fusion unchanging image with the precedente sivia
+ - fusion_sivia.py testcase fusion unchanging image with the precedente sivia (creating an object clSIVIA as a solver fully implemented in c++)
 
  - robotiqueMobile.py testcase fusion with all computing is in c++ with video recording without VIBES (can be added as SIVIA return boxes)
+
+ - SimuSecureZone_live.py test with controled robot around an ellipse
 
 ----------------------
 How to use with pyIbex
