@@ -32,14 +32,20 @@ def SIVIA(X0, test, test3, test2, eps):
     # if (t == IBOOL.IN):
     #   vibes.drawBox(X[0][0],X[0][1], X[1][0], X[1][1], '[g]' )
     if (t==IBOOL.IN or t2 == IBOOL.IN or t3 == IBOOL.IN):
-      vibes.drawBox(X[0][0],X[0][1], X[1][0], X[1][1], '[g]' )
+      
       i,j = test.toPixels(X[0].lb(),X[1].ub())
       i1,j1 = test.toPixels(X[0].ub(),X[1].ub())
       i2,j2 = test.toPixels(X[0].ub(),X[1].lb())
       i3,j3 = test.toPixels(X[0].lb(),X[1].lb())
       boatBoxesNP.append([[i,j],[i1,j1],[i2,j2],[i3,j3]])
+      if (t==IBOOL.IN): # Gascogne
+          vibes.drawBox(X[0][0],X[0][1], X[1][0], X[1][1], '[g]' )
+      elif (t2 == IBOOL.IN): # Robots
+          vibes.drawBox(X[0][0],X[0][1], X[1][0], X[1][1], '[r]' )
+      elif (t3 == IBOOL.IN): # Trail
+          vibes.drawBox(X[0][0],X[0][1], X[1][0], X[1][1], '[r]' )
     elif (t == IBOOL.OUT and t2 == IBOOL.OUT and t3 == IBOOL.OUT):
-      vibes.drawBox(X[0][0],X[0][1], X[1][0], X[1][1], '[r]' )
+      vibes.drawBox(X[0][0],X[0][1], X[1][0], X[1][1], '[b]' )
     elif (t2 == IBOOL.MAYBE):
        vibes.drawBox(X[0][0],X[0][1], X[1][0], X[1][1], '[orange]' )
     else:
