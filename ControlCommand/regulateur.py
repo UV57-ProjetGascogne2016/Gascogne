@@ -5,38 +5,39 @@ from pyIbex import *
 from vibes import vibes
 
 #TODO
-#Adapt regulator to always provide a positive u : DONE
-#Allow to transform u into PWM  : DONE
-#Make a function to determine the heading with GPS coordinates  : DONE
+#Adapt regulator to always provide a positive u
+#Allow to transform u into PWM
+#Make a function to determine the heading with GPS coordinates
 #Be able to read a file with the coordinates of each ellipsoides and spead at each point and if necessary coasts
 
 class Robot:
-    def __init__(self, x, y, V, theta, dt, numero, couleur):
+    def __init__(self, x, y, V, theta, numero, couleur, numRobots):
+        
         #Etats actuels
         self.X = np.array([x,y])
         self.V = V
-        self.theta = theta
+        self.thetaReel = theta
+        self.thetaMesure = 0
         #Etat précédent
         self.Xavant = np.array([x,y])
         self.Vavant = V
         self.thetaavant = theta
         
         self.numero = numero
+        self.totalRobots = numRobots
         self.couleur = couleur
     
         #Objectifs
-        self.Vhat = 0
+        self.Vhat = 0.0
         self.Xhat = np.array([0,0])
         
         #Commande
-        self.u = np.array([0,0])
-        self.kp = np.array([6,20])
-        self.dt = dt
+        self.kp = np.array([6,15])
        
     def calculCap(self):
         theta = math.atan2(self.X[1] - self.Xavant[1], self.X[0] - self.Xavant[0])
         return theta
-       
+    
     def distanceCote(self):
         cotes = np.array([[-4.4,47.8],[-3.8,47.8],[-2.3,47.2],[-2,46.6],[-1.3,44.4],[-2.0,43.3],[-3.6,43.5],[-2.8,43.4]])
         distances = np.zeros([len(cotes)-1,2]) #to have same array as cotes
@@ -63,7 +64,7 @@ class Robot:
         vbar, thetabar = self.calculConsigne()
         
         u_v = self.kp[0]*(vbar-self.V)+ np.random.normal(scale=0.1)
-        u_theta = self.kp[1]*2*math.atan(math.tan(0.5*(thetabar-self.theta)))+ np.random.normal(scale=0.1)
+        u_theta = self.kp[1]*2*math.atan(math.tan(0.5*(thetabar-self.thetaMesure)))+ np.random.normal(scale=0.1)
         
         # print("u_v :", u_v)
         # print("u_theta :", u_theta)
@@ -81,30 +82,48 @@ class Robot:
             u_theta = -10
         # Peut être remplacée par une saturation par la fonction tanh
         
-        self.u = np.array([u_v,u_theta])
+        u = np.array([u_v,u_theta])
   
-        return True
+        return u
         
-    # # # DEBUT PARTIE SIMULATION : EULER # # #
-    def subMove(self):
-        xp = self.V*math.cos(self.theta)
-        yp = self.V*math.sin(self.theta)
-        Vp = self.u[0] -1*self.V
-        thetap = self.u[1]
-
+    def regulate(self,t):
+               
+        #Determine next point
+        delta = 2*self.numero*math.pi/self.totalRobots
+        nextX, nextV = traj(t,delta)
+        vibes.drawCircle(nextX[0],nextX[1], 0.005, 'r')
+        self.setObjectifs(nextX, nextV)
+        
+        #Calculate the new command
+        u = self.controlCommande()
+            
+        return uTOpwm(u)
+        
+    def setNewState(self,X,V, theta):
+        #Sauvegarde de l'état précédent
         self.Xavant = self.X
         self.Vavant = self.V
-        self.thetaavant = self.theta
         
-        self.X[0] = self.X[0] + self.dt *xp #+ np.random.normal(scale=0.1)
-        self.X[1] = self.X[1] + self.dt *yp #+ np.random.normal(scale=0.1)
-        self.V = self.V + self.dt *Vp #+ np.random.normal(scale=0.1)
-        self.theta = self.theta + self.dt *thetap #+ np.random.normal(scale=0.1)
-    
+        #Nouvel état
+        self.X = X
+        self.V = V
+        
+        #Determine le cap actuel du robot par différence finie
+        self.thetaMesure = self.calculCap()
+        self.thetaReel = theta
+        
         return True
-    # # # FIN PARTIE SIMULATION # # #
+        
+def uTOpwm(u):
     
+    pwm = np.array([0.0,0.0])
     
+    pwm[0] = 1800 + 200 * math.tanh(u[0]-1)
+    
+    pwm[1] = 1500 + 500 * math.tanh(u[1])
+    
+    return pwm
+
 def dist(A, B, C): # C is the point
     AB = B-A
     AC = C-A
@@ -169,8 +188,7 @@ def traj(t,delta):
 
     return w, dw
 
-
-    
+# MAIN INUTILE
 if __name__ == '__main__':
     
     # np.array([-10*math.sin(t),10*math.cos(t)])
