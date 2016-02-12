@@ -19,6 +19,8 @@ This folder group work on calculating Set of Interval Vector:
 
  - fusion_sivia.py testcase fusion unchanging image with the precedente sivia
 
+ - robotiqueMobile.py testcase fusion with all computing is in c++ with video recording without VIBES (can be added as SIVIA return boxes)
+
 ----------------------
 How to use with pyIbex
 ----------------------
