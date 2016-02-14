@@ -23,6 +23,11 @@ This folder group work on calculating Set of Interval Vector:
 
  - SimuSecureZone_live.py test with controled robot around an ellipse
 
+ - Simulation_Server.py server that send positions of robots upon request (robots controled as in SimuSecureZone__live.py)
+
+ - Simulation_Client.py client which ask for position then proceed to compute the SecureZone (using Client.py for connexion to the server)
+
+
 ----------------------
 How to use with pyIbex
 ----------------------
