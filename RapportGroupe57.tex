@@ -7,7 +7,10 @@
 \usepackage{graphicx}
 \usepackage[french]{babel}
 \usepackage{hyperref}
-
+\usepackage{color}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{caption} 
 
 \begin{document}
 \title{\textbf{ {\Huge Surveillance du golfe de Gascogne}}}
@@ -31,9 +34,14 @@ Expliquer comment nous allons répondre aux exigences
 
 \chapter{Mise en œuvre des solutions}
 
-\section{Réalisation d'une trajectoire elliptique et répartition des bateaux}
+\paragraph{Trajectoire elliptique}
 
-Alice / Eric / Chuch
+\paragraph{Répartition des bateaux}
+Dans un premier temps, nous avions penser à répartir les bateaux avec un espacement régulier selon l'abscisse curviligne de l'ellipse.
+Cette méthode étant finalement très difficile à mettre en place d'un point de vue mathématique et algorithmique, cette solution a été abandonnée. Il aurait fallu, pour se faire, approximer les intégrales de Wallis par un développement limité assez complexe, ce qui implique un temps de programmation important et un temps de calcul beaucoup trop long pour une simple étude de faisabilité.
+C'est pour cela que nous avons décidé de nous orienter vers un retard angulaire sur chacun des robots. Ainsi, chaque robot suit le robot précédent avec un retard angulaire fixe dépendant du nombre de robots parcourant l'ellipse. Cela implique que les robots vont être d'autant plus proches les uns des uns qu'il sont près des apogées de l'ellipse, et d'autant plus éloignés aux périgées.
+Néanmoins, malgré la non-linéarité du placement des robots, nous n'avons pas de rupture de la zone de détection. En effet, comme les robots vont plus vite aux périgées, la trace qu'ils "laissent" est plus grande, et inversement aux apogées. De ce fait, on peut garantir la sécurité de la zone à surveiller, même si les robots ne sont pas régulièrement espacés.
+
 
 \section{Évolution de la consigne au cours du temps}
 
@@ -62,7 +70,39 @@ Maël / Khadim / David  ... A vous de choisir vos sous-sections
 
 
 \chapter{Réalisation de test sur robot char}
-
 Benoit / Maxime / Pierre ... A vous de choisir vos sections
+\section{Matériel}
+\subsection{GPS}
+ici la description des GPS utilisés
+\subsection{Robot}
+ici la description des robots et des récepteurs
+\section{Analyse des trames GPS}
+\textcolor{blue}{\textit{Pierre JACQUOT}}
+Afin de récupérer les coordonnées GPS des robots nous avons décidé d'utiliser la tram \textit{GPRMC} envoyée par les émetteurs GPS. L'exemple ci-dessous montre l'aspect d'une trame : \newline
+\begin{center}
+\begin{tabular}{|m{0.05\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.08\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.04\linewidth}|m{0.07\linewidth}|m{0.1\linewidth}|m{0.07\linewidth}|}
+\hline
+    081836 & A & 3751.65 & S & 14507.36 & E & 000.0 & 360.0 & 130998,01 & 011.3 & E*62  \\ \hline
+    heure UTC & Status des Donneés & Latitude & N ou S & Longitude & E ou W & Vitesse en nœuds & Cap & Date UT & Déviation Magnétique & E ou W et Checksum \\ \hline
+
+\end{tabular}
+\end{center}
+Ici les données importantes sont la longitude, la latitude le temps et la vitesse au niveau du sol. Afin de les récupérer, j'ai utiliser le package python pynmea, qui permet de facilement récupérer et parser une trame GPS. \newline
+La latitude et la longitude récupérées ont ici une structure particulière qu'il est nécessaire de modifier afin d'avoir des données compréhensible et facilement exploitable. L'exemple ci dessous montre la structure de la longitude et de la latitude \newline
+\begin{itemize}
+  \item Longitude  : 12311.12,W   Longitude 123 degrée. 11.12 min Ouest
+  \item Latitude : 4916.45,N    Latitude 49 degrée 16.45 min Nord
+\end{itemize}
+
+Les directions cardinales associées la latitude (Nord et Sud) et à la longitude (Est et Ouest) permettent de savoir respectivement de quel côte du méridien de Greenwich ou de l'équateur nous nous trouvons. En l'occurrence, nous aurons à Brest une latitude "négative" et une longitude positive.\newline
+D'un point de vue programmation, il a donc était nécessaire de convertir la longitude et la latitude en degré et de prendre en compte les directions cardinales afin de rendre négative ou non la longitude et latitude.\newline
+En plus de la latitude et de la longitude, notre programme permet aussi de récupérer les coordonnées UTM (Universal Transverse Mercator). Ces coordonnées permettent de représenter la position des robots dans un repère local et peuvent être plus facile à manipuler que des longitudes et latitudes car sont simplement sous la forme de nombres décimaux. Le système UTM se base sur une division du monde en secteur, et permet ainsi d'obtenir des coordonnées locales pour chaque secteur. Les secteurs découpants la France sont décrits dans la figure ci-dessous :\newline
+\begin{center}
+\includegraphics[scale=0.2]{secteurUTM.png} 
+\captionof{figure}{Secteur UTM}
+\label{fig1}
+\end{center}
+On constate à l'aide de la figure précédente que nous nous trouvons dans le secteur 30. Cependant afin d'effectuer ses projections par secteur, il faut aussi choisir un système géodésique représentant la Terre. Nous avons choisi le système le plus courant pour ce projet, soit le système WGS-84.
+
 
 \end{document}
