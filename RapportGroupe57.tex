@@ -4,13 +4,14 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage[french]{babel}
-\usepackage{hyperref}
 \usepackage{color}
 \usepackage{array}
 \usepackage{graphicx}
 \usepackage{caption} 
+\usepackage{graphicx}
+\usepackage[french]{babel}
+\usepackage{hyperref}
+
 
 \begin{document}
 \title{\textbf{ {\Huge Surveillance du golfe de Gascogne}}}
@@ -19,10 +20,33 @@
 
 \pagebreak
 
-\chapter{Description des objectifs }
+\begin{LARGE}
+\textbf{Introduction}
+\end{LARGE}
 
-description succinctes des exigences demandées et des différents problématiques du projet.
 
+
+\bigskip
+
+Le but de ce projet est de détecter des intrus dans une zones maritime donnée. Ici, nous allons nous intéressé au golfe de Gascogne. Nous allons donc utiliser un groupe de robots équipés de GPS et nous allons implémenter des algorithme et un stratégie pour assurer la sureté d'une zone. 
+
+\bigskip
+
+Nous allons avoir plusieurs hypothèses de départ:
+\begin{itemize}
+\item Nous supposeront que l'étude peut être simuler dans un monde en deux dimensions.
+\item Les intrus auront une vitesse constante tout au long de la simulation.
+\item Tous les robots pourront voir autour d'eux sur une distance $d_{i}$ et détecter si  un intrus intrus est présent sur cette zone.
+\item Nous définissons une zone sure comme un ensemble de point pour lequel un intrus ne peut se trouver.
+\end{itemize}
+
+\bigskip
+
+Nous allons donc présenter au final deux livrables:
+\begin{itemize}
+\item Une simulation théorique fait en grande partie en langage python qui permettra de déterminer la pertinence de nos algorithmes.
+\item Un simulation sur des robots char disponible au club robotique de l'ENSTA Bretagne.
+\end{itemize}
 
 \chapter{Quelles stratégies ont été retenues}
 
@@ -71,6 +95,24 @@ Maël / Khadim / David  ... A vous de choisir vos sous-sections
 
 \chapter{Réalisation de test sur robot char}
 Benoit / Maxime / Pierre ... A vous de choisir vos sections
+
+Pour la réalisation d'une simulation sur des robots, nous avons du implémenter un architecture afin de permettre à nos programme de gérer d'une part nos robots et d'autre part de voir si le résultat théorique correspond aux résultats expérimentaux.
+
+\medskip
+
+Nous aboutissons au final à l'architecture suivante:
+
+\bigskip
+
+\begin{figure}[ht]
+\centering
+    \includegraphics[scale=0.8,angle=0]{SyntheseExp.png}
+    \caption{Architecture mise en place pour la simulation sur robot char.}
+    \label{fig:SyntheseExp}
+\end{figure}
+
+\bigskip
+
 \section{Matériel}
 \subsection{GPS}
 ici la description des GPS utilisés
@@ -103,6 +145,13 @@ En plus de la latitude et de la longitude, notre programme permet aussi de récu
 \label{fig1}
 \end{center}
 On constate à l'aide de la figure précédente que nous nous trouvons dans le secteur 30. Cependant afin d'effectuer ses projections par secteur, il faut aussi choisir un système géodésique représentant la Terre. Nous avons choisi le système le plus courant pour ce projet, soit le système WGS-84.
+
+\section{Structure du code}
+
+Quatre scripts python: GPS2.py, commande.py, testserial.py et ServeurN.py
+
+\section{Résultats}
+
 
 
 \end{document}
