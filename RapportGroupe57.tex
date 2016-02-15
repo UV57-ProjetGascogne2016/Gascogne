@@ -11,7 +11,8 @@
 \usepackage{graphicx}
 \usepackage[french]{babel}
 \usepackage{hyperref}
-
+\usepackage{algorithm}
+\usepackage{algorithmic}
 
 \begin{document}
 \title{\textbf{ {\Huge Surveillance du Golfe de Gascogne}}}
@@ -79,9 +80,77 @@ Alice / Eric / Chuch ou Totoboule / Sylvain selon la solution retenue
 
 Totoboule / Sylvain + Image à faire
 
-\section{Estimation de la zone de sureté grâce à la théorie des intervalles}
+\section{Secure zone estimation with interval analysis}
 
-Alice / Eric / Chuch / Elouan ... au choix mais je pense que Elouan est le plus connaisseur ;)
+\subsection{Basics and Usefulness of Interval Arithmetics}
+ 
+Normal solver equation are efficient with linear sytems but in a real environment 
+
+\subsection{Thick Functions}
+
+\subsection{Special Test for Gascogne Surveillance}
+
+\begin{algorithm}
+\caption{Is $\mathbf{X} \subseteq \mathbb{S}$ , $\mathbb{S} =$ Secure Zone and $\mathbf{X} \in \mathbb{R^{\textnormal{\ensuremath{2}}}}$ }
+\begin{algorithmic}
+\REQUIRE $range \geq 0 \vee \mathbf{X} \neq \emptyset$
+\STATE $Xmx \leftarrow max([0,0], sign( (X[0]-m[0].ub())*(X[0]-m[0].lb()))) * \
+              min((X[0]-m[0].lb())^{\textnormal{\ensuremath{2}}},(X[0]-m[0].ub())^{\textnormal{\ensuremath{2}}} )$
+\STATE $ Xmy \leftarrow max([0,0], sign( (X[1]-m[1].ub())*(X[1]-m[1].lb()))) * min((X[1]-m[1].lb())^{\textnormal{\ensuremath{2}}},(X[1]-m[1].ub())^{\textnormal{\ensuremath{2}}} )$
+\STATE $Xm \leftarrow Xmx + Xmy $
+\STATE $Xp \leftarrow max((X[0]-m[0].lb())^{\textnormal{\ensuremath{2}}},(X[0]-m[0].ub())^{\textnormal{\ensuremath{2}}}) + \
+                  max((X[1]-m[1].lb())^{\textnormal{\ensuremath{2}}},(X[1]-m[1].ub())^{\textnormal{\ensuremath{2}}})$
+\STATE $Xub \leftarrow Xp | Xm$
+\IF{$Xub \cap \mathbb{[ \,\textnormal{0},\textnormal{range}^{\textnormal{\ensuremath{2}}}] \,} =  \emptyset $}
+\RETURN $\textnormal{OUT}$
+\ELSIF {$Xub \subseteq \mathbb{[ \,\textnormal{0},\textnormal{range}^{\textnormal{\ensuremath{2}}}] \,} $}
+\RETURN $\textnormal{IN}$
+\ELSE
+\IF{ $\textnormal{range}^{\textnormal{\ensuremath{2}}} - Xp.ub() < \textnormal{0}] $}
+\IF{ $Xm - \textnormal{range}^{\textnormal{\ensuremath{2}}} \subseteq \mathbb{[ \,-\infty,\textnormal{0}] \,}$}
+\RETURN $\textnormal{MAYBE}$
+\ELSE
+\RETURN $\textnormal{UNKNOWN2}$
+\ENDIF
+\ELSE
+\RETURN $\textnormal{UNKNOWN}$
+\ENDIF
+\ENDIF
+\end{algorithmic}
+\end{algorithm}
+
+Differente result In testing : \newline
+
+\begin{center}
+\begin{tabular}{|m{0.10\linewidth}|m{0.5\linewidth}|}
+\hline
+ Symbol & Meaning  \\ \hline
+ 0 & Box is not in the Secure Zone  \\ \hline
+ 1 &  Box is in the secure zone \\ \hline
+ ? &  Box may be in the secure zone  \\ \hline
+[0,?] & Box may be in the secure zone \\ \hline
+[?,1] & Box may be in the secure zone\\ \hline
+[0,1] & Box may be in the secure zone or out \\ \hline
+    
+   
+\end{tabular}
+\end{center}
+
+
+\begin{center}
+\begin{tabular}{|m{0.10\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|}
+\hline
+Test1/Test2 & 0 & 1 & ? & [0,?] &  [?,1] & [0,1] \\ \hline
+          0 & 0 & 1 & ? & [0,?] &  [?,1] & [0,1]  \\ \hline
+          1 &   & 1 & 1 &   1   &    1   &   1  \\ \hline
+          ? &   &   & ? &   ?   &  [?,1] & [?,1] \\ \hline
+      [0,?] &   &   &   & [0,?] &  [?,1] & [0,1] \\ \hline
+      [?,1] &   &   &   &       &  [?,1] & [?,1] \\ \hline
+      [0,1] &   &   &   &       &        & [0,1]  \\ \hline
+    
+   
+\end{tabular}
+\end{center}
 
 
 \section{Prise en compte du passé grâce à OpenCV}
