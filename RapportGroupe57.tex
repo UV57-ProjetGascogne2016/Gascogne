@@ -14,7 +14,7 @@
 
 
 \begin{document}
-\title{\textbf{ {\Huge Surveillance du golfe de Gascogne}}}
+\title{\textbf{ {\Huge Surveillance du Golfe de Gascogne}}}
 
 \maketitle
 
@@ -28,31 +28,31 @@
 
 \bigskip
 
-Le but de ce projet est de détecter des intrus dans une zones maritime donnée. Ici, nous allons nous intéressé au golfe de Gascogne. Nous allons donc utiliser un groupe de robots équipés de GPS et nous allons implémenter des algorithme et un stratégie pour assurer la sureté d'une zone. 
+Le but de ce projet est de détecter des intrus dans une zones maritime donnée. Ici, nous allons nous intéressé au Golfe de Gascogne. Nous allons donc utiliser un groupe de robots équipés de GPS et nous allons implémenter des algorithmes et un stratégie pour assurer la sureté d'une zone. 
 
 \bigskip
 
 Nous allons avoir plusieurs hypothèses de départ:
 \begin{itemize}
-\item Nous supposeront que l'étude peut être simuler dans un monde en deux dimensions.
+\item Nous supposeront que l'étude peut être simulée dans un monde en deux dimensions.
 \item Les intrus auront une vitesse constante tout au long de la simulation.
-\item Tous les robots pourront voir autour d'eux sur une distance $d_{i}$ et détecter si  un intrus intrus est présent sur cette zone.
-\item Nous définissons une zone sure comme un ensemble de point pour lequel un intrus ne peut se trouver.
+\item Tous les robots pourront voir autour d'eux sur une distance $d_{i}$ et détecter si  un intrus est présent sur cette zone.
+\item Nous définissons une zone sûre comme un ensemble de points où un intrus ne peut se trouver.
 \end{itemize}
 
 \bigskip
 
 Nous allons donc présenter au final deux livrables:
 \begin{itemize}
-\item Une simulation théorique fait en grande partie en langage python qui permettra de déterminer la pertinence de nos algorithmes.
-\item Un simulation sur des robots char disponible au club robotique de l'ENSTA Bretagne.
+\item Une simulation théorique faite en grande partie en langage python qui permettra de déterminer la pertinence de nos algorithmes.
+\item Un simulation sur des robots chars disponibles au club robotique de l'ENSTA Bretagne.
 \end{itemize}
 
 \chapter{Quelles stratégies ont été retenues}
 
 Expliquer comment nous allons répondre aux exigences
 
-1) description de la trajectoire retenue
+1) Description de la trajectoire retenue
 2) Méthode retenues (OpenCV / théorie des intervalles )
 
 
@@ -129,8 +129,8 @@ Afin de récupérer les coordonnées GPS des robots nous avons décidé d'utilis
 
 \end{tabular}
 \end{center}
-Ici les données importantes sont la longitude, la latitude le temps et la vitesse au niveau du sol. Afin de les récupérer, j'ai utiliser le package python pynmea, qui permet de facilement récupérer et parser une trame GPS. \newline
-La latitude et la longitude récupérées ont ici une structure particulière qu'il est nécessaire de modifier afin d'avoir des données compréhensible et facilement exploitable. L'exemple ci dessous montre la structure de la longitude et de la latitude \newline
+Ici les données importantes sont la longitude, la latitude le temps et la vitesse au niveau du sol. Afin de les récupérer,nous avons utilisé le package python pynmea, qui permet de facilement récupérer et parser une trame GPS. \newline
+La latitude et la longitude récupérées ont ici une structure particulière qu'il est nécessaire de modifier afin d'avoir des données compréhensibles et facilement exploitables. L'exemple ci-dessous montre la structure de la longitude et de la latitude. \newline
 \begin{itemize}
   \item Longitude  : 12311.12,W   Longitude 123 degrée. 11.12 min Ouest
   \item Latitude : 4916.45,N    Latitude 49 degrée 16.45 min Nord
@@ -138,7 +138,7 @@ La latitude et la longitude récupérées ont ici une structure particulière qu
 
 Les directions cardinales associées la latitude (Nord et Sud) et à la longitude (Est et Ouest) permettent de savoir respectivement de quel côte du méridien de Greenwich ou de l'équateur nous nous trouvons. En l'occurrence, nous aurons à Brest une latitude "négative" et une longitude positive.\newline
 D'un point de vue programmation, il a donc était nécessaire de convertir la longitude et la latitude en degré et de prendre en compte les directions cardinales afin de rendre négative ou non la longitude et latitude.\newline
-En plus de la latitude et de la longitude, notre programme permet aussi de récupérer les coordonnées UTM (Universal Transverse Mercator). Ces coordonnées permettent de représenter la position des robots dans un repère local et peuvent être plus facile à manipuler que des longitudes et latitudes car sont simplement sous la forme de nombres décimaux. Le système UTM se base sur une division du monde en secteur, et permet ainsi d'obtenir des coordonnées locales pour chaque secteur. Les secteurs découpants la France sont décrits dans la figure ci-dessous :\newline
+En plus de la latitude et de la longitude, notre programme permet aussi de récupérer les coordonnées UTM (Universal Transverse Mercator). Ces coordonnées permettent de représenter la position des robots dans un repère local et peuvent être plus facile à manipuler que des longitudes et latitudes car ces coordonnées sont simplement sous la forme de nombres décimaux. Le système UTM se base sur une division du monde en secteur, et permet ainsi d'obtenir des coordonnées locales pour chaque secteur. Les secteurs découpants la France sont décrits dans la figure ci-dessous :\newline
 \begin{center}
 \includegraphics[scale=0.2]{secteurUTM.png} 
 \captionof{figure}{Secteur UTM}
