@@ -20,6 +20,13 @@ A proportional regulation compute the command $u_v$ and $u_{\theta}$ which will 
 \[ u_v = Kp_v \cdot (\bar{v}-v_{robot}) \]
 \[ u_{\theta} = Kp_{\theta} \cdot (\bar{\theta}-\theta_{robot}) \]
 
+$u_v$ and $u_{\theta}$ are saturated to avoid an overloading of the actuators.\\
+
+This command is then used as the entry of a simple simulator used to test the regulation.
+The command is used as the acceleration of the robot, and its position at each time is computed through an Euler method. The objective point is on an parametric ellipse moving with time.\\
+
+The method is easily extended to multiple robots : each one is controlled separately. For each iteration of the loop, the regulation process is applied on each robot. The command is calculated for each one, then the simulation use it to compute the new position of each one.
+
 $u_v$ and $u_{\theta}$ are saturated to avoid a surcharge of the actionners. 
 
 \subsection{Feedback linearisation}
