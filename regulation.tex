@@ -1,6 +1,6 @@
 \section{Regulation of the robot pack}
 
-Two methods have been studied and implemented to regulate the pack of robots. The first is a method by artificial potential field, robust and easy to debug. This method was chosen to regulate the real robots on the play field. The second method is a method of looping linearisation, very efficient. This method was chosen for the simulation because its integration in a simulation is easier than on robots.
+Two methods have been studied and implemented to regulate the pack of robots. The first one is a method of feedback linearisation. This method was chosen for the simulation of the surveillance of the Bay of Biscay because it is a classic and efficient method. The second approach is a method based on artificial potential field. This method is robust and easy to debug. It was chosen to regulate the real robots on the testing field because it was easier to implement on the robots and provided good results.
 
 \subsection{Artificial potential field}
 Let $p_{robot}$ be the position of our considered robot, let $p_{target}$ and $v_{target}$ be the position and speed of the target we want the robot to reach.
@@ -21,3 +21,52 @@ A proportional regulation compute the command $u_v$ and $u_{\theta}$ which will 
 \[ u_{\theta} = Kp_{\theta} \cdot (\bar{\theta}-\theta_{robot}) \]
 
 $u_v$ and $u_{\theta}$ are saturated to avoid a surcharge of the actionners. 
+
+\subsection{Feedback linearisation}
+Feedback linearisation is a classical approach used in controlling nonlinear systems. We transform the nonlinear system \ref{system1} into an equivalent linear system \ref{system2}, which is of the form $\ddot{y}=A(x)*u$.
+
+\begin{equation}
+\dot{x} = f(x,u) \rightarrow \left\{ 
+\begin{array}{l l}
+  \dot{x_1} = x_4 * \cos(x_3)\\
+  \dot{x_2} = x_4 * \sin(x_3)\\
+  \dot{x_3} = u_1\\
+  \dot{x_4} = u_2\\
+\end{array} \right.
+\label{system1}
+\end{equation}
+
+\begin{equation}
+\begin{pmatrix}
+	\ddot{y_1}\\
+	\ddot{y_2} 
+\end{pmatrix}
+=
+\begin{pmatrix}
+	-x_4*\sin(x_3) & \cos(x_3)\\
+	 x_4*\cos(x_3) & \sin(x_3)
+\end{pmatrix}
+\begin{pmatrix}
+	u_1\\
+	u_2
+\end{pmatrix}   
+\hspace*{1cm} \textnormal{ with } y = \begin{pmatrix}
+	x_1\\
+	x_2
+\end{pmatrix}
+\label{system2}
+\end{equation}
+
+If $w$ is the instruction of the robot has to follow, then we have the expression of $u$ as shown in equation \ref{equationU}. We can then use it to regulate the robot in an Euler method.
+\begin{equation}
+ u =
+\begin{pmatrix}
+	-x_4*\sin(x_3) & \cos(x_3)\\
+	 x_4*\cos(x_3) & \sin(x_3)
+\end{pmatrix}^{-1}
+\begin{pmatrix}
+	(y_1-w_1) + (\dot{y_1} - \dot{w_1}) -  \ddot{w_1}\\
+	(y_2-w_2) + (\dot{y_2} - \dot{w_2}) -  \ddot{w_2}
+\end{pmatrix}
+\label{equationU}
+\end{equation}
