@@ -12,11 +12,12 @@ from SIVIA import *
 import cv2
 import numpy as np
 
-# position of the origine frame pixel
-i0 = 500
-j0 = 100
-pixelScale = 10 # Km/pixel
-epsilon = 10*pixelScale
+# Index of the frame origine pixel
+i0 =410
+j0 =400
+pixelScale=1.1693 # km/pixel
+epsilon = 1
+
 
 class ClassTest:
     def __init__(self, imgIntegral):
