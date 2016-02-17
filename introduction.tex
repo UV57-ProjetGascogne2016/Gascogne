@@ -1,22 +1,23 @@
 \bigskip
 
-Le but de ce projet est de détecter des intrus dans une zones maritime donnée. Ici, nous allons nous intéressé au Golfe de Gascogne. Nous allons donc utiliser un groupe de robots équipés de GPS et nous allons implémenter des algorithmes et un stratégie pour assurer la sureté d'une zone. 
+The goal of this project is to ensure the security of the Bay of Biscay by detecting any intruder entering this maritime area.
+A group of robots, equipped with GPS, are being used thanks to specific algorythms and a particular monitoring strategy.
 
 \bigskip
 
-Nous allons avoir plusieurs hypothèses de départ:
+In order to proceed with the project, the following working hypotheses are considered:
 \begin{itemize}
-\item Nous supposeront que l'étude peut être simulée dans un monde en deux dimensions.
-\item Les intrus auront une vitesse constante tout au long de la simulation.
-\item Tous les robots pourront voir autour d'eux sur une distance $d_{i}$ et détecter si  un intrus est présent sur cette zone.
-\item Nous définissons une zone sûre comme un ensemble de points où un intrus ne peut se trouver.
+\item The simulation can be done in a two-dimensional world ;
+\item Intruders will have a constant given velocity throughout the simulation ;
+\item Every surveillance robot has a detection range of $d_{i}$ within which an itruder is necessarily detected ;
+\item The safe zones are as a group of rectangles where the intruder can not be.
 \end{itemize}
 
 \bigskip
 
-Nous allons donc présenter au final deux livrables:
+Two deliverables will be delivered:
 \begin{itemize}
-\item Une simulation théorique faite en grande partie en langage python qui permettra de déterminer la pertinence de nos algorithmes.
-\item Un simulation sur des robots chars disponibles au club robotique de l'ENSTA Bretagne.
-\end{itemize} 
+\item The first one is a theoretical simulation written to a large extent in Python 3.0 which will allow to determine whether or not the used algorythms are relevant ;
+\item The second one is a practical simulation using some buggies robots available in the robotics group of ENSTA Bretagne.
+\end{itemize}
 
