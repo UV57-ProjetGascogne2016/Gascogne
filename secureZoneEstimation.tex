@@ -1,0 +1,89 @@
+\subsection{Basics and Usefulness of Interval Arithmetics}
+Normal solver equation are efficient with linear sytems but in a real environment 
+\subsection{Thick Functions}
+Introduce the concept of MAYBE
+\subsection{Special Test for Gascogne Surveillance}
+We found a test to determine if a box is inside the secure zone covered 
+by one
+
+
+\begin{algorithm}
+\caption{Is $\mathbf{X} \subseteq \mathbb{S}$ , $\mathbb{S} =$ Secure Zone and $\mathbf{X} \in \mathbb{R^{\textnormal{\ensuremath{2}}}}$ }
+\begin{algorithmic}
+\REQUIRE $X$,$range $ (reach of boat),$m$ (position of boat)
+\STATE $Xmx \leftarrow max([0,0], sign( (X[0]-m[0].ub())*(X[0]-m[0].lb()))) * \
+              min((X[0]-m[0].lb())^{\textnormal{\ensuremath{2}}},(X[0]-m[0].ub())^{\textnormal{\ensuremath{2}}} )$
+\STATE $ Xmy \leftarrow max([0,0], sign( (X[1]-m[1].ub())*(X[1]-m[1].lb()))) * min((X[1]-m[1].lb())^{\textnormal{\ensuremath{2}}},(X[1]-m[1].ub())^{\textnormal{\ensuremath{2}}} )$
+\STATE $Xm \leftarrow Xmx + Xmy $
+\STATE $Xp \leftarrow max((X[0]-m[0].lb())^{\textnormal{\ensuremath{2}}},(X[0]-m[0].ub())^{\textnormal{\ensuremath{2}}}) + \
+                  max((X[1]-m[1].lb())^{\textnormal{\ensuremath{2}}},(X[1]-m[1].ub())^{\textnormal{\ensuremath{2}}})$
+\STATE $Xub \leftarrow Xp | Xm$
+\IF{$Xub \cap \mathbb{[ \,\textnormal{0},\textnormal{range}^{\textnormal{\ensuremath{2}}}] \,} =  \emptyset $}
+\RETURN $\textnormal{OUT}$
+\ELSIF {$Xub \subseteq \mathbb{[ \,\textnormal{0},\textnormal{range}^{\textnormal{\ensuremath{2}}}] \,} $}
+\RETURN $\textnormal{IN}$
+\ELSE
+\IF{ $\textnormal{range}^{\textnormal{\ensuremath{2}}} - Xp.ub() < \textnormal{0}] $}
+\IF{ $Xm - \textnormal{range}^{\textnormal{\ensuremath{2}}} \subseteq \mathbb{[ \,-\infty,\textnormal{0}] \,}$}
+\RETURN $\textnormal{MAYBE}$
+\ELSE
+\RETURN $\textnormal{UNKNOWN2}$
+\ENDIF
+\ELSE
+\RETURN $\textnormal{UNKNOWN}$
+\ENDIF
+\ENDIF
+\end{algorithmic}
+\end{algorithm}
+
+Differente result In testing : \newline
+
+\begin{center}
+\begin{tabular}{|m{0.10\linewidth}|m{0.5\linewidth}|}
+\hline
+ Symbol & Meaning  \\ \hline
+ 0 & Box is not in the Secure Zone  \\ \hline
+ 1 &  Box is in the secure zone \\ \hline
+ ? &  Box may be in the secure zone  \\ \hline
+[0,?] & Box may be in the secure zone \\ \hline
+[?,1] & Box may be in the secure zone\\ \hline
+[0,1] & Box may be in the secure zone or out \\ \hline
+    
+   
+\end{tabular}
+\end{center}
+
+
+\begin{center}
+\begin{tabular}{|m{0.10\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|}
+\hline
+Test1/Test2 & 0 & 1 & ? & [0,?] &  [?,1] & [0,1] \\ \hline
+          0 & 0 & 1 & ? & [0,?] &  [?,1] & [0,1]  \\ \hline
+          1 &   & 1 & 1 &   1   &    1   &   1  \\ \hline
+          ? &   &   & ? &   ?   &  [?,1] & [?,1] \\ \hline
+      [0,?] &   &   &   & [0,?] &  [?,1] & [0,1] \\ \hline
+      [?,1] &   &   &   &       &  [?,1] & [?,1] \\ \hline
+      [0,1] &   &   &   &       &        & [0,1]  \\ \hline
+    
+   
+\end{tabular}
+\end{center}
+
+\begin{algorithm}
+\caption{Is $\mathbf{X} \subseteq \mathbb{S}$ , $\mathbb{S} =$ Secure Zone and $\mathbf{X} \in \mathbb{R^{\textnormal{\ensuremath{2}}}}$ }
+\begin{algorithmic}
+\REQUIRE $X$,$range $ (reach of a boat),$\{m\}$ (list of position of boats)
+\STATE $R \leftarrow \textnormal{Algorithme1(X,range,\{m\})}$
+\IF{$\textnormal{IN} \subset R$}
+\RETURN $\textnormal{IN}$
+\ELSIF {$\textnormal{UNKNOWN} \subset R $}
+\RETURN $\textnormal{UNKNOWN}$
+\ELSIF {$\textnormal{MAYBE} \subset R $}
+\RETURN $\textnormal{MAYBE}$
+\ELSIF {$\forall r \in R $, $ r = \textnormal{OUT} $}
+\RETURN $\textnormal{OUT}$
+\ELSE
+\RETURN $\textnormal{UNKNOWN}$
+\ENDIF
+\end{algorithmic}
+\end{algorithm}
