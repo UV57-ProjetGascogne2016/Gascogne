@@ -7,7 +7,7 @@ BUILDTEX=$(TEX) $(PROJECT).tex
 
 .PHONY: clean clean-all all index glossaire bib pdf 
 
-all: bib glossaire index
+all: bib
 	$(BUILDTEX)
 	$(BUILDTEX)
 	
