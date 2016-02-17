@@ -49,37 +49,9 @@ Nous allons donc présenter au final deux livrables:
 \item Un simulation sur des robots chars disponibles au club robotique de l'ENSTA Bretagne.
 \end{itemize}
 
-\chapter{Quelles stratégies ont été retenues}
+\chapter{Secure zone processing}
 
-Expliquer comment nous allons répondre aux exigences
-
-1) Description de la trajectoire retenue
-2) Méthode retenues (OpenCV / théorie des intervalles )
-
-
-\chapter{Mise en œuvre des solutions}
-
-\paragraph{Trajectoire elliptique}
-
-\paragraph{Répartition des bateaux}
-Dans un premier temps, nous avions penser à répartir les bateaux avec un espacement régulier selon l'abscisse curviligne de l'ellipse.
-Cette méthode étant finalement très difficile à mettre en place d'un point de vue mathématique et algorithmique, cette solution a été abandonnée. Il aurait fallu, pour se faire, approximer les intégrales de Wallis par un développement limité assez complexe, ce qui implique un temps de programmation important et un temps de calcul beaucoup trop long pour une simple étude de faisabilité.
-C'est pour cela que nous avons décidé de nous orienter vers un retard angulaire sur chacun des robots. Ainsi, chaque robot suit le robot précédent avec un retard angulaire fixe dépendant du nombre de robots parcourant l'ellipse. Cela implique que les robots vont être d'autant plus proches les uns des uns qu'il sont près des apogées de l'ellipse, et d'autant plus éloignés aux périgées.
-Néanmoins, malgré la non-linéarité du placement des robots, nous n'avons pas de rupture de la zone de détection. En effet, comme les robots vont plus vite aux périgées, la trace qu'ils "laissent" est plus grande, et inversement aux apogées. De ce fait, on peut garantir la sécurité de la zone à surveiller, même si les robots ne sont pas régulièrement espacés.
-
-
-\section{Évolution de la consigne au cours du temps}
-
-Alice / Eric / Chuch
-
-\section{Regulation of multiples real robots for demonstration of concept}
-
-\input{regulationMeute}
-Alice / Eric / Chuch ou Totoboule / Sylvain selon la solution retenue
-
-\section{Description du fonctionnement du simulateur}
-
-Totoboule / Sylvain + Image à faire
+\section{Introduction to interval analysis}
 
 \section{Secure zone estimation with interval analysis}
 
@@ -177,18 +149,53 @@ Test1/Test2 & 0 & 1 & ? & [0,?] &  [?,1] & [0,1] \\ \hline
 \end{algorithmic}
 \end{algorithm}
 
-
-\section{Prise en compte du passé grâce à OpenCV}
-
-Maël / Khadim / David  ... A vous de choisir vos sous-sections
-
-\subsubsection{Pavage des images}
-
-\subsubsection{Érosion des zones de sureté}
+\section{Mesh to boxes functions}
 
 
-\chapter{Réalisation de test sur robot char}
-Benoit / Maxime / Pierre ... A vous de choisir vos sections
+\section{Erosion functions}
+
+
+
+\section{Global Sivia algorithm}
+
+
+
+\section{Results}
+
+
+
+\chapter{Robots regulation}
+
+\section{Regulation}
+
+\subsection{Regulation with potential field}
+
+\subsection{Regulation with the linearisation of the command}
+
+This part has to be modified 
+
+
+\paragraph{Répartition des bateaux}
+Dans un premier temps, nous avions penser à répartir les bateaux avec un espacement régulier selon l'abscisse curviligne de l'ellipse.
+Cette méthode étant finalement très difficile à mettre en place d'un point de vue mathématique et algorithmique, cette solution a été abandonnée. Il aurait fallu, pour se faire, approximer les intégrales de Wallis par un développement limité assez complexe, ce qui implique un temps de programmation important et un temps de calcul beaucoup trop long pour une simple étude de faisabilité.
+C'est pour cela que nous avons décidé de nous orienter vers un retard angulaire sur chacun des robots. Ainsi, chaque robot suit le robot précédent avec un retard angulaire fixe dépendant du nombre de robots parcourant l'ellipse. Cela implique que les robots vont être d'autant plus proches les uns des uns qu'il sont près des apogées de l'ellipse, et d'autant plus éloignés aux périgées.
+Néanmoins, malgré la non-linéarité du placement des robots, nous n'avons pas de rupture de la zone de détection. En effet, comme les robots vont plus vite aux périgées, la trace qu'ils "laissent" est plus grande, et inversement aux apogées. De ce fait, on peut garantir la sécurité de la zone à surveiller, même si les robots ne sont pas régulièrement espacés.
+
+
+
+\section{Evolution of the elliptic trajectory}
+
+
+
+\section{Conversion of the order to a PWM command}
+
+
+
+
+
+\chapter{Test on tanks}
+
+
 
 Pour la réalisation d'une simulation sur des robots, nous avons du implémenter un architecture afin de permettre à nos programme de gérer d'une part nos robots et d'autre part de voir si le résultat théorique correspond aux résultats expérimentaux.
 
@@ -210,9 +217,12 @@ Nous aboutissons au final à l'architecture suivante:
 \section{Matériel}
 \subsection{GPS}
 ici la description des GPS utilisés
+
+
 \subsection{Robot}
 ici la description des robots et des récepteurs
-\section{Analyse des trames GPS}
+
+\section{GPS Sentence Analysis}
 \textcolor{blue}{\textit{Pierre JACQUOT}}
 
 In order to get the GPS coordinates of each robots we decided to use the \textit{GPRMC} sentence send by the GPS's emitter. The exemple below show the structure of a \textit{GPRMC} sentence : \
