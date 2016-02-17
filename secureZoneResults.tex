@@ -1,8 +1,9 @@
 
-\paragraph{Répartition des bateaux}
-Dans un premier temps, nous avions penser à répartir les bateaux avec un espacement régulier selon l'abscisse curviligne de l'ellipse.
-Cette méthode étant finalement très difficile à mettre en place d'un point de vue mathématique et algorithmique, cette solution a été abandonnée. Il aurait fallu, pour se faire, approximer les intégrales de Wallis par un développement limité assez complexe, ce qui implique un temps de programmation important et un temps de calcul beaucoup trop long pour une simple étude de faisabilité.
-C'est pour cela que nous avons décidé de nous orienter vers un retard angulaire sur chacun des robots. Ainsi, chaque robot suit le robot précédent avec un retard angulaire fixe dépendant du nombre de robots parcourant l'ellipse. Cela implique que les robots vont être d'autant plus proches les uns des uns qu'il sont près des apogées de l'ellipse, et d'autant plus éloignés aux périgées.
-Néanmoins, malgré la non-linéarité du placement des robots, nous n'avons pas de rupture de la zone de détection. En effet, comme les robots vont plus vite aux périgées, la trace qu'ils "laissent" est plus grande, et inversement aux apogées. De ce fait, on peut garantir la sécurité de la zone à surveiller, même si les robots ne sont pas régulièrement espacés.
+\paragraph{Distribution of the robots}
+
+At first we thought about distributing the robots with a regular spacing along the curvilinear abscissa of the ellipse. This method being too difficult in terms of mathematical theory as well as algorithmical means, this solution was abandoned. In fact, we should have approximated the Wallis' integrals to a limited development which is quite prickly. This would have implied a long programming time and a processing time too lengthy for a simple feasibility study.\\
+
+That is why we decided to forget this method in benefit for an easier one which involves angular delays. Thus, each robot follows the previous one with a given angular delay depending on how many robots there are covering the ellipse.
+This implies that the nearer the robots are to the apogees, the nearer they will be with one another and on the contrary, the nearer they are to the perigees, the farer they are with one another. However, the non linearity in terms of distance between every robots does not impede the conservation of the secure zone. As a matter of fact the robots are faster when they are near the perigee. Therefore the streaks are bigger and so fill in the gaps between the robots. This way we can guarantee the continuity of the secure zone the robots are watching over.//
 
 
