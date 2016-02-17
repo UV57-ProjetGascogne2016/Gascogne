@@ -1,267 +1,105 @@
-\documentclass[10pt,a4paper]{report}
-\usepackage[utf8]{inputenc}
-\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{color}
-\usepackage{array}
-\usepackage{graphicx}
-\usepackage{caption} 
-\usepackage{graphicx}
-\usepackage[french]{babel}
-\usepackage{hyperref}
-\usepackage{algorithm}
-\usepackage{algorithmic}
+\documentclass[12pt,fleqn]{report} %taille de la police par défaut, et équations jusitifées à gauche
+\input{packages}     % Ce fichier contient tous les packages nécessaires à la compilation
 
 \begin{document}
-\title{\textbf{ {\Huge Surveillance du Golfe de Gascogne}}}
-
-\maketitle
-
-\pagebreak
-
-\begin{LARGE}
-\textbf{Introduction}
-\end{LARGE}
+\renewcommand{\contentsname}{Sommaire}                % des jolis noms pour la table des matières
+\renewcommand{\bibname}{Références bibliographiques}  % des jolis noms pour les sections bibliographiques
+\renewcommand{\glossaryname}{Glossaire}               % et glossaire
 
 
+%----------------------------------------------------------------------------------------
+%	 PAGE DE TITRE
+%-----------------------------	-----------------------------------------------------------
+\input{PageDeTitre}
 
-\bigskip
+%----------------------------------------------------------------------------------------
+%	SOMMAIRE
+%----------------------------------------------------------------------------------------
+\tableofcontents  % Imprime le sommaire
+\cleardoublepage  % pour commencer sur une page impaire
+%----------------------------------------------------------------------------------------
+%	Préambules
+%----------------------------------------------------------------------------------------
+\chapter*{Remerciements}
+\addcontentsline{toc}{chapter}{Remerciements}
+\input{Remerciements}
+%----------------------------------------------------------------------------------------
+%	PART I 
+%----------------------------------------------------------------------------------------
+\chapter{Introduction}
+\input{introduction}
 
-Le but de ce projet est de détecter des intrus dans une zones maritime donnée. Ici, nous allons nous intéressé au Golfe de Gascogne. Nous allons donc utiliser un groupe de robots équipés de GPS et nous allons implémenter des algorithmes et un stratégie pour assurer la sureté d'une zone. 
-
-\bigskip
-
-Nous allons avoir plusieurs hypothèses de départ:
-\begin{itemize}
-\item Nous supposeront que l'étude peut être simulée dans un monde en deux dimensions.
-\item Les intrus auront une vitesse constante tout au long de la simulation.
-\item Tous les robots pourront voir autour d'eux sur une distance $d_{i}$ et détecter si  un intrus est présent sur cette zone.
-\item Nous définissons une zone sûre comme un ensemble de points où un intrus ne peut se trouver.
-\end{itemize}
-
-\bigskip
-
-Nous allons donc présenter au final deux livrables:
-\begin{itemize}
-\item Une simulation théorique faite en grande partie en langage python qui permettra de déterminer la pertinence de nos algorithmes.
-\item Un simulation sur des robots chars disponibles au club robotique de l'ENSTA Bretagne.
-\end{itemize}
-
+%----------------------------------------------------------------------------------------
+%	PART II 
+%----------------------------------------------------------------------------------------
 \chapter{Secure zone processing}
 
 \section{Introduction to interval analysis}
-
+\input{intervalAnalysis}
 \section{Secure zone estimation with interval analysis}
-
-\subsection{Basics and Usefulness of Interval Arithmetics}
- 
-Normal solver equation are efficient with linear sytems but in a real environment 
-
-\subsection{Thick Functions}
-
-Introduce the concept of MAYBE
-
-\subsection{Special Test for Gascogne Surveillance}
-
-We found a test to determine if a box is inside the secure zone covered 
-by one 
-
-\begin{algorithm}
-\caption{Is $\mathbf{X} \subseteq \mathbb{S}$ , $\mathbb{S} =$ Secure Zone and $\mathbf{X} \in \mathbb{R^{\textnormal{\ensuremath{2}}}}$ }
-\begin{algorithmic}
-\REQUIRE $X$,$range $ (reach of boat),$m$ (position of boat)
-\STATE $Xmx \leftarrow max([0,0], sign( (X[0]-m[0].ub())*(X[0]-m[0].lb()))) * \
-              min((X[0]-m[0].lb())^{\textnormal{\ensuremath{2}}},(X[0]-m[0].ub())^{\textnormal{\ensuremath{2}}} )$
-\STATE $ Xmy \leftarrow max([0,0], sign( (X[1]-m[1].ub())*(X[1]-m[1].lb()))) * min((X[1]-m[1].lb())^{\textnormal{\ensuremath{2}}},(X[1]-m[1].ub())^{\textnormal{\ensuremath{2}}} )$
-\STATE $Xm \leftarrow Xmx + Xmy $
-\STATE $Xp \leftarrow max((X[0]-m[0].lb())^{\textnormal{\ensuremath{2}}},(X[0]-m[0].ub())^{\textnormal{\ensuremath{2}}}) + \
-                  max((X[1]-m[1].lb())^{\textnormal{\ensuremath{2}}},(X[1]-m[1].ub())^{\textnormal{\ensuremath{2}}})$
-\STATE $Xub \leftarrow Xp | Xm$
-\IF{$Xub \cap \mathbb{[ \,\textnormal{0},\textnormal{range}^{\textnormal{\ensuremath{2}}}] \,} =  \emptyset $}
-\RETURN $\textnormal{OUT}$
-\ELSIF {$Xub \subseteq \mathbb{[ \,\textnormal{0},\textnormal{range}^{\textnormal{\ensuremath{2}}}] \,} $}
-\RETURN $\textnormal{IN}$
-\ELSE
-\IF{ $\textnormal{range}^{\textnormal{\ensuremath{2}}} - Xp.ub() < \textnormal{0}] $}
-\IF{ $Xm - \textnormal{range}^{\textnormal{\ensuremath{2}}} \subseteq \mathbb{[ \,-\infty,\textnormal{0}] \,}$}
-\RETURN $\textnormal{MAYBE}$
-\ELSE
-\RETURN $\textnormal{UNKNOWN2}$
-\ENDIF
-\ELSE
-\RETURN $\textnormal{UNKNOWN}$
-\ENDIF
-\ENDIF
-\end{algorithmic}
-\end{algorithm}
-
-Differente result In testing : \newline
-
-\begin{center}
-\begin{tabular}{|m{0.10\linewidth}|m{0.5\linewidth}|}
-\hline
- Symbol & Meaning  \\ \hline
- 0 & Box is not in the Secure Zone  \\ \hline
- 1 &  Box is in the secure zone \\ \hline
- ? &  Box may be in the secure zone  \\ \hline
-[0,?] & Box may be in the secure zone \\ \hline
-[?,1] & Box may be in the secure zone\\ \hline
-[0,1] & Box may be in the secure zone or out \\ \hline
-    
-   
-\end{tabular}
-\end{center}
-
-
-\begin{center}
-\begin{tabular}{|m{0.10\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|}
-\hline
-Test1/Test2 & 0 & 1 & ? & [0,?] &  [?,1] & [0,1] \\ \hline
-          0 & 0 & 1 & ? & [0,?] &  [?,1] & [0,1]  \\ \hline
-          1 &   & 1 & 1 &   1   &    1   &   1  \\ \hline
-          ? &   &   & ? &   ?   &  [?,1] & [?,1] \\ \hline
-      [0,?] &   &   &   & [0,?] &  [?,1] & [0,1] \\ \hline
-      [?,1] &   &   &   &       &  [?,1] & [?,1] \\ \hline
-      [0,1] &   &   &   &       &        & [0,1]  \\ \hline
-    
-   
-\end{tabular}
-\end{center}
-
-\begin{algorithm}
-\caption{Is $\mathbf{X} \subseteq \mathbb{S}$ , $\mathbb{S} =$ Secure Zone and $\mathbf{X} \in \mathbb{R^{\textnormal{\ensuremath{2}}}}$ }
-\begin{algorithmic}
-\REQUIRE $X$,$range $ (reach of a boat),$\{m\}$ (list of position of boats)
-\STATE $R \leftarrow \textnormal{Algorithme1(X,range,\{m\})}$
-\IF{$\textnormal{IN} \subset R$}
-\RETURN $\textnormal{IN}$
-\ELSIF {$\textnormal{UNKNOWN} \subset R $}
-\RETURN $\textnormal{UNKNOWN}$
-\ELSIF {$\textnormal{MAYBE} \subset R $}
-\RETURN $\textnormal{MAYBE}$
-\ELSIF {$\forall r \in R $, $ r = \textnormal{OUT} $}
-\RETURN $\textnormal{OUT}$
-\ELSE
-\RETURN $\textnormal{UNKNOWN}$
-\ENDIF
-\end{algorithmic}
-\end{algorithm}
-
+\input{secureZoneEstimation}
 \section{Mesh to boxes functions}
-
-
+\input{mesh2Boxes}
 \section{Erosion functions}
-
-
-
+\input{erosion}
 \section{Global Sivia algorithm}
-
-
-
+\input{siviaAlgo}
 \section{Results}
+\input{secureZoneResults}
 
-
-
+%----------------------------------------------------------------------------------------
+%	PART III 
+%----------------------------------------------------------------------------------------
 \chapter{Robots regulation}
 
 \section{Regulation}
-
-\subsection{Regulation with potential field}
-
-\subsection{Regulation with the linearisation of the command}
-
-This part has to be modified 
-
-
-\paragraph{Répartition des bateaux}
-Dans un premier temps, nous avions penser à répartir les bateaux avec un espacement régulier selon l'abscisse curviligne de l'ellipse.
-Cette méthode étant finalement très difficile à mettre en place d'un point de vue mathématique et algorithmique, cette solution a été abandonnée. Il aurait fallu, pour se faire, approximer les intégrales de Wallis par un développement limité assez complexe, ce qui implique un temps de programmation important et un temps de calcul beaucoup trop long pour une simple étude de faisabilité.
-C'est pour cela que nous avons décidé de nous orienter vers un retard angulaire sur chacun des robots. Ainsi, chaque robot suit le robot précédent avec un retard angulaire fixe dépendant du nombre de robots parcourant l'ellipse. Cela implique que les robots vont être d'autant plus proches les uns des uns qu'il sont près des apogées de l'ellipse, et d'autant plus éloignés aux périgées.
-Néanmoins, malgré la non-linéarité du placement des robots, nous n'avons pas de rupture de la zone de détection. En effet, comme les robots vont plus vite aux périgées, la trace qu'ils "laissent" est plus grande, et inversement aux apogées. De ce fait, on peut garantir la sécurité de la zone à surveiller, même si les robots ne sont pas régulièrement espacés.
-
-
-
+\input{regulation}
 \section{Evolution of the elliptic trajectory}
-
-
-
+\input{ellipse}
 \section{Conversion of the order to a PWM command}
-
-
-
-
-
-\chapter{Test on tanks}
-
-
-
-Pour la réalisation d'une simulation sur des robots, nous avons du implémenter un architecture afin de permettre à nos programme de gérer d'une part nos robots et d'autre part de voir si le résultat théorique correspond aux résultats expérimentaux.
-
-\medskip
-
-Nous aboutissons au final à l'architecture suivante:
-
-\bigskip
-
-\begin{figure}[ht]
-\centering
-    \includegraphics[scale=0.8,angle=0]{SyntheseExp.png}
-    \caption{Architecture mise en place pour la simulation sur robot char.}
-    \label{fig:SyntheseExp}
-\end{figure}
-
-\bigskip
-
+\input{conversionPWM}
+%----------------------------------------------------------------------------------------
+%	PART IV 
+%----------------------------------------------------------------------------------------
+\chapter{Implementation with buggy robots}
 \section{Matériel}
-\subsection{GPS}
-ici la description des GPS utilisés
-
-
-\subsection{Robot}
-ici la description des robots et des récepteurs
-
+\input{materiel}
 \section{GPS Sentence Analysis}
-\textcolor{blue}{\textit{Pierre JACQUOT}}
-
-In order to get the GPS coordinates of each robots we decided to use the \textit{GPRMC} sentence send by the GPS's emitter. The exemple below show the structure of a \textit{GPRMC} sentence : \
-\begin{center}
-\begin{tabular}{|m{0.05\linewidth}|m{0.06\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.08\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.04\linewidth}|m{0.08\linewidth}|m{0.1\linewidth}|m{0.07\linewidth}|}
-\hline
-    081836 & A & 3751.65 & S & 14507.36 & E & 000.0 & 360.0 & 130998,01 & 011.3 & E*62  \\ \hline
-     UTC & Data status & Latitude & N or S & Longitude & E or W & Speed (knots) & Track made good &  UT Date & Magnetic Variation & E or W and Checksum \\ \hline
-
-\end{tabular}
-\end{center}
-The most valuable data are the latitude, the longitude, the speed over ground (in knots) ant the time stamp. In order to get those different data, we used the python package pynmea, which allows to easily get and parse a GPS sentence. \\
-However, the longitude and latitude obtained using this specific sentence have a particular structure that we had to changed to make them easier to manipulate and compute in our algorithm. The example below show how the longitude and latitude are originally formatted :
-\
-\begin{itemize}
-  \item Longitude  : \textit{12311.12,W} which means Longitude 123 degree. 11.12 min West
-  \item Latitude : \textit{4916.45,N} which means Latitude 49 degree 16.45 min North
-\end{itemize}
-
-In order to ease the computation, our program automatically convert the longitude and latitude in degrees, take into account the cardinal direction associated with each coordinates.
-These cardinal directions North and South for the latitude and East and West for the longitude, let us know respectively on which side of the Greenwich (or prime) meridian we are located and on which side of the equator we are located. As a matter of fact, we will have in Brest a "negative" latitude and a positive longitude, due to our positioning regarding the equator and Greenwich meridian.\\
-
-Our program not only give the coordinates in degrees but also convert them into UTM (Universal Transverse Mercator) coordinates. This new set of coordinates allow a localisation of the robot in a flat local coordinates system and maybe more easy to use as they are just decimal numbers. The UTM system itself, consist in a subdivision of the world in different sectors which can be consider as flat, and with a specific system of coordinates.
-The figure below show the subdivision of France: \
-
-\begin{center}
-\includegraphics[scale=0.2]{secteurUTM.png} 
-\captionof{figure}{Secteur UTM}
-\label{fig1}
-\end{center}
-
-This figure show that we are currently in the sector 30. Whereas,in order to compute UTM coordinates, we need first to choose a geodesic system representing the Earth. For this project we chose the WGS-84 system which is most commonly used.
-
-
+\input{trameGPS}
 \section{Structure du code}
-
-Quatre scripts python: GPS2.py, commande.py, testserial.py et ServeurN.py
-
+\input{descriptionCode}
 \section{Résultats}
+\input{resultat}
+
+%----------------------------------------------------------------------------------------
+%	PART V 
+%----------------------------------------------------------------------------------------
+\chapter{Conclusion}
+\input{conclusion}
+
+%----------------------------------------------------------------------------------------
+\appendix
+\part{Annexes}
+\chapter{Première annexe}
+\chapter{Deuxième annexe}
+\chapter{Troisième annexe}
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHIE
+%----------------------------------------------------------------------------------------
+\addcontentsline{toc}{part}{Bibliographie}
+%\bibliographystyle{apalike-fr}
+\bibliographystyle{plain-fr}
+\bibliography{bibliographie.bib}
+\nocite{*}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
+
+
+
+
 
 
 
