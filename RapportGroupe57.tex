@@ -2,32 +2,37 @@
 \input{packages}     % Ce fichier contient tous les packages nécessaires à la compilation
 
 \begin{document}
-\renewcommand{\contentsname}{Sommaire}                % des jolis noms pour la table des matières
-\renewcommand{\bibname}{Références bibliographiques}  % des jolis noms pour les sections bibliographiques
-\renewcommand{\glossaryname}{Glossaire}               % et glossaire
+\renewcommand{\contentsname}{Contents}	% Nom pour la table des matières
+\renewcommand{\bibname}{Bibliography}	% Nom pour les références bibliographiquessss
 
 
 %----------------------------------------------------------------------------------------
-%	 PAGE DE TITRE
+%	PAGE DE GARDE
 %-----------------------------	-----------------------------------------------------------
 \input{PageDeTitre}
+
 
 %----------------------------------------------------------------------------------------
 %	SOMMAIRE
 %----------------------------------------------------------------------------------------
 \tableofcontents  % Imprime le sommaire
 \cleardoublepage  % pour commencer sur une page impaire
+
+
 %----------------------------------------------------------------------------------------
 %	Préambules
 %----------------------------------------------------------------------------------------
-\chapter*{Remerciements}
-\addcontentsline{toc}{chapter}{Remerciements}
+\chapter*{Acknowledgment}
+\addcontentsline{toc}{chapter}{Acknowledgment}
 \input{Remerciements}
+
+
 %----------------------------------------------------------------------------------------
 %	PART I 
 %----------------------------------------------------------------------------------------
 \chapter{Introduction}
 \input{introduction}
+
 
 %----------------------------------------------------------------------------------------
 %	PART II 
@@ -36,16 +41,22 @@
 
 \section{Introduction to interval analysis}
 \input{intervalAnalysis}
+
 \section{Secure zone estimation with interval analysis}
 \input{secureZoneEstimation}
+
 \section{Mesh to boxes functions}
 \input{mesh2Boxes}
+
 \section{Erosion functions}
 \input{erosion}
+
 \section{Global Sivia algorithm}
 \input{siviaAlgo}
+
 \section{Results}
 \input{secureZoneResults}
+
 
 %----------------------------------------------------------------------------------------
 %	PART III 
@@ -54,10 +65,14 @@
 
 \section{Regulation}
 \input{regulation}
+
 \section{Evolution of the elliptic trajectory}
 \input{ellipse}
+
 \section{Conversion of the order to a PWM command}
 \input{conversionPWM}
+
+
 %----------------------------------------------------------------------------------------
 %	PART IV 
 %----------------------------------------------------------------------------------------
@@ -66,28 +81,30 @@
 \input{materiel}
 \section{GPS Sentence Analysis}
 \input{trameGPS}
-\section{Structure du code}
+\section{Structure of the programming code}
 \input{descriptionCode}
-\section{Résultats}
+\section{Résults}
 \input{resultat}
 
 %----------------------------------------------------------------------------------------
 %	PART V 
 %----------------------------------------------------------------------------------------
-\chapter{Conclusion}
+\chapter*{Conclusion}
+\addcontentsline{toc}{chapter}{Conclusion}
 \input{conclusion}
 
 %----------------------------------------------------------------------------------------
 \appendix
-\part{Annexes}
-\chapter{Première annexe}
-\chapter{Deuxième annexe}
-\chapter{Troisième annexe}
+\chapter*{Appendix}
+\addcontentsline{toc}{chapter}{Appendix}
+\chapter{Appendix 1}
+\chapter{Appendix 2}
+\chapter{Appendix 3}
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHIE
 %----------------------------------------------------------------------------------------
-\addcontentsline{toc}{part}{Bibliographie}
+\addcontentsline{toc}{part}{Bibliography}
 %\bibliographystyle{apalike-fr}
 \bibliographystyle{plain-fr}
 \bibliography{bibliographie.bib}
