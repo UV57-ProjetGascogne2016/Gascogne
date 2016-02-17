@@ -3,5 +3,5 @@ At the end of the regulation,the command is saturated, so the range of $u_v$ is 
 The command needs to be transformed in an acceptable value for the robots.
 the command taken by the robots is a PWM values in the range [1000,2000]. Because we need to keep the robots always moving, we do not want to allow the robots to have a null speed or worst, a negative one.
 To ensure that, we maintain the forward command slightly over 1500. The turn command however needs to have the same degree of freedom below and beyond the neutral point of 1500.
-So we linearly transform  ($u_v$,$u_{\theta}$) into a couple of PWM values, of range [1600,2000]\times [1000,2000]. 
+So we linearly transform  ($u_v$,$u_{\theta}$) into a couple of PWM values, of range [1600,2000]x[1000,2000]. 
 We considered using a smoother transition than the linear transformation of a saturated command, such as the hyperbolic tangente, but we finally decided that it was not necessary.
