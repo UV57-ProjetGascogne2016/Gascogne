@@ -1,7 +1,23 @@
-\subsection{Regulation with potential field}
+\section{Regulation of the robot pack}
 
-\subsection{Regulation with the linearisation of the command}
+Two methods have been studied and implemented to regulate the pack of robots. The first is a method by artificial potential field, robust and easy to debug. This method was chosen to regulate the real robots on the play field. The second method is a method of looping linearisation, very efficient. This method was chosen for the simulation because its integration in a simulation is easier than on robots.
 
-This part has to be modified 
+\subsection{Artificial potential field}
+Let $p_{robot}$ be the position of our considered robot, let $p_{target}$ and $v_{target}$ be the position and speed of the target we want the robot to reach.
+We can consider the robot and the target as two particles of opposite charge, and then compute the potential field between them. In case of obstacles, we can consider them as particles of same charge than the robot's.
+The potential field method calculate the instantaneous speed vector $w(p_{robot},t)$ the robot need to reach (or at least follow) the target. To compute that speed, we use the potential $V$ between the robot and the target :\\
+\[ V(p_{robot}) = v^T_{target}. p_{robot} + \|p_{robot}-p_{target}\|^2 \]
+And compute the gradient of that potential to find the order $w(p_{robot},t)$:
+\[w(p_{robot},t) = -grad(V(p_{robot})) = -\frac{dV}{dP}(p)^T\]
+So :
+\[w(p_{robot},t) = v_{target}-2.(p_{robot}-p_{target})\]
+For w, we compute the order speed and course:
+\[\bar{v} = \|w\| \]
+\[\bar{\theta} = tan(\frac{w_y}{w_x})\]
 
+A proportional regulation compute the command $u_v$ and $u_{\theta}$ which will be used to control the robot.
 
+\[ u_v = Kp_v \cdot (\bar{v}-v_{robot}) \]
+\[ u_{\theta} = Kp_{\theta} \cdot (\bar{\theta}-\theta_{robot}) \]
+
+$u_v$ and $u_{\theta}$ are saturated to avoid a surcharge of the actionners. 
