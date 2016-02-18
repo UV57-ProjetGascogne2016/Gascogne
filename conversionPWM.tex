@@ -1,7 +1,12 @@
+\vspace*{0.5 cm}
+	\textcolor{blue} {Thomas Boulier & Sylvain Hunault}
+\vspace*{0.5cm}
+
 The regulation process returns the two values ($u_v$,$u_{\theta}$) as ouput. But those values are in "natural" unit, which is acceptable for a simulation but not for the regulation of actual robots.
-At the end of the regulation,the command is saturated, so the range of $u_v$ is [0,1] , while the range of $u_{\theta}$ is [-10,10].
+At the end of the regulation, the command is saturated, so the range of $u_v$ is [0,1] , while the range of $u_{\theta}$ is [-10,10].
 The command needs to be transformed in an acceptable value for the robots.
-the command taken by the robots is a PWM values in the range [1000,2000]. Because we need to keep the robots always moving, we do not want to allow the robots to have a null speed or worst, a negative one.
+Indeed, the command taken by the robots is composed of Pulse Width Modultion (PWM) values in the range [1000,2000]. Because we need to keep the robots always moving but not too fast. Moreover we do not want to allow the robots to have a null speed or worst, a negative one, because we process the course of the robot thanks to his previous position. Therefore, if the robot stops moving, the processed course is wrong and all the regulation is compromised.
 To ensure that, we maintain the forward command slightly over 1500. The turn command however needs to have the same degree of freedom below and beyond the neutral point of 1500.
-So we linearly transform  ($u_v$,$u_{\theta}$) into a couple of PWM values, of range [1600,2000]x[1000,2000]. 
-We considered using a smoother transition than the linear transformation of a saturated command, such as the hyperbolic tangente, but we finally decided that it was not necessary.
+So we linearly transform  ($u_v$,$u_{\theta}$) into a couple of PWM values, of range [1600,1800]x[1000,2000]. 
+We used a smoother transition than the linear transformation of a saturated command, which is the hyperbolic tangent.
+Finally, the command is saturated twice, the first time in "natural" unit that are understood by the simulator and the second time as PWM values that are used by the motors.
