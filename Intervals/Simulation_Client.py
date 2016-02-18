@@ -9,10 +9,10 @@ import time
 import Client
   
 # Index of the frame origine pixel
-i0 =410
+i0 =390
 j0 =400
 echellePixel=1.1693 # km/pixel
-radius=40 # Detection radius in km
+radius=30 # Detection radius in km
 PositionIncertitude = 1 # +- in km
 epsilon=5 # SIVIA precision in km
 enemySpeed = 100 # in m/s
@@ -40,7 +40,8 @@ if __name__ == '__main__':
 
     accPixelErode = 0 # accumulator of pixel to erode
     #Solver creation
-    clsivia = pyIbex.clSIVIA(image,1,2,3)
+
+    clsivia = pyIbex.clSIVIA(image,1,2,1) # (image, kernelSize, erosion_elem, iteration)
     clsivia.setRecord("test_video_via_server_0.avi",25.0,True)
     #Loop
     t_old = 0

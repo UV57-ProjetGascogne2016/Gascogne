@@ -15,16 +15,18 @@ import pickle
 import time
 
 class SimulationControl:
-    def __init__(self, N,temps_fin,tps_ellipse):
+    def __init__(self, N,temps_fin, dt, tps_ellipse, period_ellipse):
         
         self.N = N # number of boats
         self.Tf = temps_fin # end of simulation
-        self.dt = 1 # simulation step
+        self.dt = dt # simulation step
         self.tps_ellipse=tps_ellipse # system speed (ellipse goal reached after tps_ellipse)
+        self.period_ellipse = period_ellipse # elliptical period of a robot
         
         # coast points (center at (45N,4W) )
-        self.points =[[-31.5397, 311.1665],[15.7698, 311.1665],[134.0436, 244.4880],[157.6983, 177.8094],[212.8927,-66.6785],[157.6983,-188.9225],[94.6190,-177.8094],[31.5397,-166.6963],[-145.8710,-155.5832]]        
-        self.objectifs=[[-31.5397, 301.1665],[5.769799999999955, 301.1665], [114.0436, 244.488], [137.69829999999993, 177.8094000000002],[165.2955, 55.56545], [192.8927, -66.67850000000004], [142.6456712727633, -175.3946918551941],[94.6190,-167.8094], [41.5397000000002, -156.6963],[-145.8710,-145.5832]]
+        self.points =[[-21.5397, 311.1665],[15.7698, 311.1665],[145, 230.4880],[147.6983, 175],[212,125],[200,-66.6785],[157.6983,-188.9225],[94.6190,-177.8094],[31.5397,-166.6963],[-145.8710,-145.5832]]        
+        self.objectifs=[[-21.5397, 301.1665], [4.2301999999999875, 301.1665], [124.99999999999999, 230.48799999999983], [127.69829999999996, 175.00000000000006], [192.0, 115.0], [181.16494502580676, -67.80267373924153], [142.6983, -178.9225], [41.5397000000002, -156.6963],[-145.8710,-135.5832]]
+
 
     def xdot(self,x,u):
         theta=x[2]
@@ -41,7 +43,7 @@ class SimulationControl:
     
     def param_ellipse(self,p,k):
         # computation of ellipse parameters
-        couple=[[5,6],[5,7],[5,8],[4,8],[3,8],[2,8],[1,9],[0,9]]
+        couple=[[5,6],[5,7],[4,7],[3,7],[3,8],[2,8],[1,8],[0,8]]
         i=couple[k][0]
         j=couple[k][1]
         l=np.sqrt((p[i][0]-p[j][0])**2+(p[i][1]-p[j][1])**2)/2
@@ -51,7 +53,7 @@ class SimulationControl:
         
     def simuOneStep(self,t,k,tk,theta_i,theta_f,l_i,l_f,centre_i,centre_f,X):
         toSend =np.ones((self.N,3)) # data to send on each loop
-        f1 = 0.05
+        f1 = 1/self.period_ellipse # robot frequence around the ellipse.
         if(k < 7): # transitional period
             if(tk >= self.tps_ellipse): # target ellipse reached, get next
                 k = k+1
@@ -74,7 +76,7 @@ class SimulationControl:
         dmAxis = (l_f-l_i)/self.tps_ellipse
         
         # evolution matrix of ellipse
-        D = np.array([[ mAxis ,0],[0,18]])
+        D = np.array([[ mAxis ,0],[0,15]])
         dD = np.array([[dmAxis ,0],[0,0]])
         
         R = np.array([[np.cos(theta),-np.sin(theta)],[np.sin(theta), np.cos(theta)]])
@@ -91,7 +93,7 @@ class SimulationControl:
             centre = centre_f
             dcentre = np.array([[0],[0]])
             
-            D = np.array([[l_f,0],[0,0.1]])
+            D = np.array([[l_f,0],[0,15]])
             dD = np.array([[0,0],[0,0]])
             
             R = np.array([[np.cos(theta),-np.sin(theta)],[np.sin(theta), np.cos(theta)]])
@@ -123,9 +125,15 @@ class SimulationControl:
             toSend[i,0] = t
             toSend[i,1] = X[0,i]
             toSend[i,2] = X[1,i]
+            v = X[3,i]*1000
+            print("Speed Robot",i," : ", v,"m/s")
             
         return t,k,tk,theta_i,theta_f,l_i,l_f,centre_i,centre_f, toSend, X, cons
            
+
+################################################################################################
+# All the fonctions above this line, are used to display a simulation for the control for the robots in Vibes.
+# They are not used for the Secure Zone Simulation.
         
     def simulation(self):
         theta_i = 0 # initial angle of the ellipse
@@ -172,7 +180,13 @@ class SimulationControl:
             mon_pickler.dump(toLog)        
         
 if __name__ == '__main__':
-    gascogne = SimulationControl(10,550,50)
+
+    N = 10 # number of boats
+    Tf = 5000 # end of simulation
+    dt = 1 # simulation step
+    tps_ellipse=500 # system speed (ellipse goal reached after tps_ellipse)
+    period_ellipse = 200 # elliptical period of a robot in s
+    gascogne = SimulationControl(N, Tf, dt, tps_ellipse,period_ellipse)
     toLog = gascogne.simulation()
     gascogne.log(toLog)    
         

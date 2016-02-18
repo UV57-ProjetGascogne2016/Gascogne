@@ -14,17 +14,26 @@ M = []
 Lock = threading.RLock()
 LockEnd = threading.RLock()
 
+nbsRobots = 10 # number of boats
+Tf = 5000 # end of simulation in s
+dt = 1 # simulation step in s
+tps_ellipse=500 # system speed (ellipse goal reached after tps_ellipse) in m/s
+period_ellipse = 200 # elliptical period of a robot in s
+
+
+
+
 class ThreadSimu(threading.Thread):
     '''dérivation d'un objet thread pour gérer la connexion avec un client'''
     def __init__(self):
         global M
         threading.Thread.__init__(self)
-        nbsRobots = 10
+        
         with Lock:
             for i in range(nbsRobots):
                M.append([0,[0,0]])
         # Initialisation Simulation
-        self.simu = SimulationControl(nbsRobots,550,20)
+        self.simu = SimulationControl(nbsRobots,Tf,dt,tps_ellipse,period_ellipse)
         self.alive = True
         
     def run(self):
