@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 
@@ -7,6 +8,8 @@
 
 \begin{document}
 
+=======
+>>>>>>> fba7358bd1ee0ccecc0d4c562fb9e779d634f74e
 \section{SIVIA Algorithm}
 
 \vspace{0.3 cm}
@@ -25,24 +28,39 @@
   \vspace{0.5 cm}
   \textbf{Inputs}% Inputs section
   \begin{algorithmic}[1]
+<<<<<<< HEAD
     \State Area $X0$
     \State Object $France$
     \State Object $Erosion$
     \State Object $Robots$
+=======
+    \STATE Area $X0$
+    \STATE Object $France$
+    \STATE Object $Erosion$
+    \STATE Object $Robots$
+>>>>>>> fba7358bd1ee0ccecc0d4c562fb9e779d634f74e
   \end{algorithmic}
   \bigskip
 
   \textbf{Output}% Output section
   \begin{algorithmic}[1]
+<<<<<<< HEAD
     \State Boxes $France U Robots U Erosion$
     \State Boxes $France$
    	\State Boxes $Robots U Erosion$
    	\State Boxes $Sea$
+=======
+    \STATE Boxes $France U Robots U Erosion$
+    \STATE Boxes $France$
+   	\STATE Boxes $Robots U Erosion$
+   	\STATE Boxes $Sea$
+>>>>>>> fba7358bd1ee0ccecc0d4c562fb9e779d634f74e
   \end{algorithmic}
   \bigskip
   
   \textbf{Initialization}% Initialization section
   \begin{algorithmic}[1]
+<<<<<<< HEAD
    	\State $stack\gets deque([IntervalVector(X0)])$
 	\State $lf\gets LargestFirst(eps/2.0)$
 	\State $k\gets 0$ 
@@ -50,6 +68,15 @@
 	\State $BoxesFrance\gets []$
 	\State $BoxesRobotsUErosion\gets []$
 	\State $BoxesSea\gets []$
+=======
+   	\STATE $stack\gets deque([IntervalVector(X0)])$
+	\STATE $lf\gets LargestFirst(eps/2.0)$
+	\STATE $k\gets 0$ 
+	\STATE $BoxesFranceURobotsUErosion\gets []$
+	\STATE $BoxesFrance\gets []$
+	\STATE $BoxesRobotsUErosion\gets []$
+	\STATE $BoxesSea\gets []$
+>>>>>>> fba7358bd1ee0ccecc0d4c562fb9e779d634f74e
   \end{algorithmic}
   
 \end{algorithm}
@@ -66,6 +93,7 @@
   \caption{SIVIA algorythm (continued)}
   \begin{algorithmic}
   
+<<<<<<< HEAD
 	\While{len(stack)}
 	
 		\vspace{0.3 cm}
@@ -84,32 +112,71 @@
 		\State $i1,j1\gets France.toPixels(X[0].ub(),X[1].ub())$
 		\State $i2,j2\gets France.toPixels(X[0].ub(),X[1].lb())$ 
 		\State $i3,j3\gets France.toPixels(X[0].lb(),X[1].lb())$
+=======
+	\WHILE{len(stack)}
+	
+		\vspace{0.3 cm}
+	
+  		\STATE $X\gets stack.popleft()$
+		\STATE $FranceTest\gets France.function(X)$
+		\STATE $ErosionTest\gets Erosion.function(X)$ 
+		\STATE $RobotsTest\gets Robots.function(X)$
+
+		\vspace{0.3 cm}
+
+  		\textcolor{blue}{//Obtain the 4 corners of each box in pixel:}\
+  		 
+  		
+  		\STATE $i,j\gets France.toPixels(X[0].lb(),X[1].ub())$
+		\STATE $i1,j1\gets France.toPixels(X[0].ub(),X[1].ub())$
+		\STATE $i2,j2\gets France.toPixels(X[0].ub(),X[1].lb())$ 
+		\STATE $i3,j3\gets France.toPixels(X[0].lb(),X[1].lb())$
+>>>>>>> fba7358bd1ee0ccecc0d4c562fb9e779d634f74e
   
 		\vspace{0.3 cm}
 		
 	 	\textcolor{blue}{//If we are in the France, robots or erosion:}\
 	 	
 
+<<<<<<< HEAD
 	 	\If{FranceTest==IBOOL.IN or ErosionTest == IBOOL.IN or RobotsTest == IBOOL.IN}
      		\State $BoxesFranceURobotsUErosion.append([[i,j],[i1,j1],[i2,j2],[i3,j3]]);$
+=======
+	 	\IF{FranceTest==IBOOL.IN or ErosionTest == IBOOL.IN or RobotsTest == IBOOL.IN}
+     		\STATE $BoxesFranceURobotsUErosion.append([[i,j],[i1,j1],[i2,j2],[i3,j3]]);$
+>>>>>>> fba7358bd1ee0ccecc0d4c562fb9e779d634f74e
      		
      		\vspace{0.3 cm}
      	
      	\textcolor{blue}{//If we are in the France:}\
 	 	 
+<<<<<<< HEAD
 	 	 \If{FranceTest==IBOOL.IN}
      		\State $BoxesFrance.append([[i,j],[i1,j1],[i2,j2],[i3,j3]]);$
 	 	\EndIf
+=======
+	 	 \IF{FranceTest==IBOOL.IN}
+     		\STATE BoxesFrance.append([[i,j],[i1,j1],[i2,j2],[i3,j3]]);
+	 	\ENDIF
+>>>>>>> fba7358bd1ee0ccecc0d4c562fb9e779d634f74e
 	 	
 	 	\vspace{0.3 cm}
 	 	
 	 	\textcolor{blue}{//If we are in the robots or erosion:}\
 	 	 
+<<<<<<< HEAD
 	 	 \If{RobotsTest == IBOOL.IN or ErosionTest == IBOOL.IN}
      		\State $BoxesRobotsUErosion.append([[i,j],[i1,j1],[i2,j2],[i3,j3]]);$
 	 	 
 	
 	 	 \EndIf
+=======
+	 	 \IF{RobotsTest == IBOOL.IN or ErosionTest == IBOOL.IN}
+     		\STATE $BoxesRobotsUErosion.append([[i,j],[i1,j1],[i2,j2],[i3,j3]]);$
+	 	 
+	
+	 	 \ENDIF
+>>>>>>> fba7358bd1ee0ccecc0d4c562fb9e779d634f74e
 	 	 
 	 	 \vspace{0.3 cm}
      		
@@ -119,6 +186,7 @@
      	\textcolor{blue}{//Else if we are outside all:}\
      
 	 	 
+<<<<<<< HEAD
 	 	 \ElsIf If{ FranceTest== IBOOL.OUT and  ErosionTest== IBOOL.OUT and RobotsTest == IBOOL.OUT}
 	 	 \State $BoxesSea.append([[i,j],[i1,j1],[i2,j2],[i3,j3]]);$
 	 	 
@@ -141,6 +209,25 @@
 	\vspace{0.3 cm}
 	
   \State $vibes.axisEqual()$\\
+=======
+	 	 \ELSIF{ $FranceTest = IBOOL.OUT and  ErosionTest = IBOOL.OUT and RobotsTest = IBOOL.OUT$}
+	 	 \STATE BoxesSea.append([[i,j],[i1,j1],[i2,j2],[i3,j3]]);
+	 	 
+     	\ELSE
+     
+     			\IF{$X.maxdiam()\geq eps$}
+          			\STATE $(X1, X2)\gets lf.bisect(X)$
+          			\STATE $stack.append(X1)$
+         			\STATE $stack.append(X2)$
+         		\ENDIF
+         	
+  		\ENDIF
+ 	 \ENDWHILE 
+	
+	\vspace{0.3 cm}
+	
+  \STATE $vibes.axisEqual()$\\
+>>>>>>> fba7358bd1ee0ccecc0d4c562fb9e779d634f74e
   return BoxesFranceURobotsUErosion,BoxesFrance,BoxesRobotsUErosion,BoxesSea
 
 
@@ -164,6 +251,7 @@
     	\includegraphics[scale=0.45]{SimulationFusion.png} 
     	\caption{Paving of the intersection between the Gascogne Golf, the robots and their erosion } 
     \label{S1 U S2}
+<<<<<<< HEAD
 	\end{figure} 
 	
 	
@@ -172,3 +260,6 @@
 	
 
 \end{document}
+=======
+	\end{figure} 
+>>>>>>> fba7358bd1ee0ccecc0d4c562fb9e779d634f74e
