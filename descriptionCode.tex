@@ -26,8 +26,13 @@ The last one is here in order to organize the whole program and it's called Serv
 It use one thread in order to :
 \begin{itemize}
 \item Get the current GPS positions of every robots
-\item Get the new elliptic trajectory and 
+\item Get the new elliptic trajectory and give the instructions to every robots
+\item Get the new PWM command that has to be apply to every robots.
+\item Send those PWM instruction. 
 \end{itemize}
 
+Whereas, the other thread is here in order to allow a communication between this program and the program which has to run the secure zone processing algorithm.
+
+This script is the master and all the other script are just intermediary in order to regulate the robots. 
 
 \pagebreak
