@@ -1,14 +1,21 @@
+\chapter{Réalisation de test sur robot char}
+\section{Matériel}
+\subsection{GPS}
+ici la description des GPS utilisés
+\subsection{Robot}
+ici la description des robots et des récepteurs
+\section{GPS Sentence Analysis}
 \textcolor{blue}{\textit{Pierre JACQUOT}}
 
 In order to get the GPS coordinates of each robots we decided to use the \textit{GPRMC} sentence send by the GPS's emitter. The exemple below show the structure of a \textit{GPRMC} sentence : \
 \begin{center}
-\begin{tabular}{|m{0.06\linewidth}|m{0.06\linewidth}|m{0.08\linewidth}|m{0.07\linewidth}|m{0.09\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.05\linewidth}|m{0.09\linewidth}|m{0.1\linewidth}|m{0.07\linewidth}|}
+\begin{tabular}{|m{0.05\linewidth}|m{0.06\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.08\linewidth}|m{0.07\linewidth}|m{0.07\linewidth}|m{0.04\linewidth}|m{0.08\linewidth}|m{0.1\linewidth}|m{0.07\linewidth}|}
 \hline
     081836 & A & 3751.65 & S & 14507.36 & E & 000.0 & 360.0 & 130998,01 & 011.3 & E*62  \\ \hline
      UTC & Data status & Latitude & N or S & Longitude & E or W & Speed (knots) & Track made good &  UT Date & Magnetic Variation & E or W and Checksum \\ \hline
 
 \end{tabular}
-\end{center}
+\end{center}\\
 The most valuable data are the latitude, the longitude, the speed over ground (in knots) ant the time stamp. In order to get those different data, we used the python package pynmea, which allows to easily get and parse a GPS sentence. \\
 However, the longitude and latitude obtained using this specific sentence have a particular structure that we had to changed to make them easier to manipulate and compute in our algorithm. The example below show how the longitude and latitude are originally formatted :
 \
@@ -29,13 +36,7 @@ The figure below show the subdivision of France: \
 \label{fig1}
 \end{center}
 
-This figure show that we are currently in the sector 30u. Whereas,in order to compute UTM coordinates, we need first to choose a geodesic system representing the Earth. For this project we chose the WGS-84 system which is most commonly used.\
-For the live demonstration, and to help monitoring the robots behaviour we decided to represent them in a scaled representation of the test area. In order to do this, we used google maps to get the coordinate of each corners of the test area. (cf figure below). Then we converted these coordinates in UTM coordinates, and chose the bottom left corner (the red cross on the figure below), as our new origin.
+This figure show that we are currently in the sector 30. Whereas,in order to compute UTM coordinates, we need first to choose a geodesic system representing the Earth. For this project we chose the WGS-84 system which is the most commonly used system.
 
-\begin{center}
-\includegraphics[scale=0.2]{test_area.png} 
-\captionof{figure}{Representation of each corner of the test area}
-\label{fig1}
-\end{center}
 
-Then, when the robot are running, we can check visually if they are sending the right GPS coordinates. (cf figure below)
+\end{document}
