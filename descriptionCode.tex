@@ -3,9 +3,9 @@
 
 The code which have been implemented for this part of the project can be sum up with the following picture \ref{fig:SyntheseCodeRegulationRobot}:
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
-    \includegraphics[scale=0.5,angle=90]{SyntheseCodeRegulationRobot.PNG}
+    \includegraphics[scale=0.68,angle=90]{SyntheseCodeRegulationRobot.PNG}
     \caption{Architecture of the program which control the regulation of the robots.}
     \label{fig:SyntheseCodeRegulationRobot}
 \end{figure}
@@ -23,6 +23,7 @@ For are used in order to implement a part of the functions needed in order to fu
 \end{itemize}
 
 The last one is here in order to organize the whole program and it's called ServeurSimu.py.
+
 It use one thread in order to :
 \begin{itemize}
 \item Get the current GPS positions of every robots
@@ -31,8 +32,17 @@ It use one thread in order to :
 \item Send those PWM instruction. 
 \end{itemize}
 
-Whereas, the other thread is here in order to allow a communication between this program and the program which has to run the secure zone processing algorithm.
+The other thread is here in order to allow a communication between the robots and the program which has to run the secure zone processing algorithm.
 
 This script is the master and all the other script are just intermediary in order to regulate the robots. 
+
+The following picture sum up how this script organize the whole program.
+
+\begin{figure}[ht]
+\centering
+    \includegraphics[scale=0.8,angle=0]{SyntheseExp.PNG}
+    \caption{Architecture mise en place pour la simulation sur robot char.}
+    \label{fig:SyntheseExp}
+\end{figure}
 
 \pagebreak

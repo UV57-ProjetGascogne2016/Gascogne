@@ -1,21 +1,7 @@
 \textcolor{blue}{\textit{Maxime Bouyssou}}
 
-Pour la réalisation d'une simulation sur des robots, nous avons du implémenter un architecture afin de permettre à nos programme de gérer d'une part nos robots et d'autre part de voir si le résultat théorique correspond aux résultats expérimentaux.
 
-\medskip
 
-Nous aboutissons au final à l'architecture suivante:
-
-\bigskip
-
-\begin{figure}[ht]
-\centering
-    \includegraphics[scale=0.8,angle=0]{SyntheseExp.PNG}
-    \caption{Architecture mise en place pour la simulation sur robot char.}
-    \label{fig:SyntheseExp}
-\end{figure}
-
-\bigskip
 \subsection{Hardware architecture}
 The hardware part of each robot is pretty simple. Each robot is equipped with a serial GPS wired to a serial radio module (see figure below). So each robots will emits its GPS coordinates to the central computer who will then uses this coordinates to compute the next order he will send to them.
 
