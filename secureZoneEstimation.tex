@@ -48,7 +48,7 @@ The figure~\ref{fig:SecureZoneOneBoat} shows the zone covered by the surveillanc
 
 \subsection{Test for Biscay Bay Surveillance}
 For all this section we consider that for all $\mathbf{X} \in \mathbb{R^{\textnormal{\ensuremath{2}}}}$,  $\mathbf{X}$ is included in the bay of Biscay (the set $\mathbb{G}$) in order to facilitate the comprehension.\\
-The figure~\ref{fig:SecureZoneOneBoat} shows that the zone covered by the boats can be found but it also point out that the computing of the zone is not efficient, the uncertain zone cannot be classifyasout or in the secured zone so the SIVIA algorithm cut the boxes to their minimal size even if it is possible to know their status of uncertainty thus proceeding to more computation than needed, a new test is required instead of a simple separator to allow a faster and cleaner computation of the secured zone.
+The figure~\ref{fig:SecureZoneOneBoat} shows that the zone covered by the boats can be found but it also point out that the computing of the zone is not efficient, the uncertain zone cannot be classify as out or in the secured zone so the SIVIA algorithm cut the boxes to their minimal size even if it is possible to know their status of uncertainty thus proceeding to more computation than needed. A new test is required instead of a simple separator to allow a faster and cleaner computation of the secured zone.
 The test can be found in the algorithm ~\ref{alg:one_boat_alg} which take a box (an element of $\mathbb{R}^{\textnormal{\ensuremath{2}}}$)) and determine its status, the state can vary between six status where for now the border regroup more or less three status as it can be seen in the following table:
 
 \begin{center}
@@ -65,23 +65,24 @@ The test can be found in the algorithm ~\ref{alg:one_boat_alg} which take a box 
 \end{tabular}
 \end{center}
 
-The test to know if a box is in,out or else the zone covered by one boat it need to invert a thick set created by the function in use, here it is the euclidean norm for interval:
+The test~\ref{alg:one_boat_alg} need to invert a thick set created by the function in use, here it is the euclidean norm for interval:
  \[ f : \mathbb{R^{\textnormal{\ensuremath{2}}}} \rightarrow \mathbb{R} \]
    \[x \rightarrow \|X-m\|^{\textnormal{\ensuremath{2}}}\]
    
- 
-
+ Where: 
+ \[f^{\textnormal{\ensuremath{-}}} = (X[0]-m[0])^{\textnormal{\ensuremath{2}}}+(X[1]-m[1])^{\textnormal{\ensuremath{2}}}\] 
+\[f^{\textnormal{\ensuremath{+}}} = max((X[0]-m[0].lb())^{\textnormal{\ensuremath{2}}},(X[0]-m[0].ub())^{\textnormal{\ensuremath{2}}}) + \
+                  max((X[1]-m[1].lb())^{\textnormal{\ensuremath{2}}},(X[1]-m[1].ub())^{\textnormal{\ensuremath{2}}})\] 
 
 \begin{algorithm}[H]
 \caption{Is $\mathbf{X} \subseteq \mathbb{S}_m$ , $\mathbb{S}_m =$ Secured Zone by boat $m$ and $\mathbf{X} \in \mathbb{R^{\textnormal{\ensuremath{2}}}}$ }
 \label{alg:one_boat_alg}
 \begin{algorithmic}[1]
 \REQUIRE $X$,$range $ (reach of boat),$m$ (position of boat)\\
-  $Xm = f^{\textnormal{\ensuremath{-}}}(X) $\\
-  $Xp = f^{\textnormal{\ensuremath{+}}}(X) $
-\STATE $Xm \leftarrow (X[0]-m[0])^{\textnormal{\ensuremath{2}}}+(X[1]-m[1])^{\textnormal{\ensuremath{2}}}$
-\STATE $Xp \leftarrow max((X[0]-m[0].lb())^{\textnormal{\ensuremath{2}}},(X[0]-m[0].ub())^{\textnormal{\ensuremath{2}}}) + \
-                  max((X[1]-m[1].lb())^{\textnormal{\ensuremath{2}}},(X[1]-m[1].ub())^{\textnormal{\ensuremath{2}}})$
+  $ f : \mathbb{R^{\textnormal{\ensuremath{2}}}} \rightarrow \mathbb{R} $\\
+   $x \rightarrow \|X-m\|^{\textnormal{\ensuremath{2}}}$
+\STATE $Xm \leftarrow f^{\textnormal{\ensuremath{-}}}(X) $
+\STATE $Xp \leftarrow f^{\textnormal{\ensuremath{+}}}(X) $
 \STATE $Xub \leftarrow Xp | Xm$
 \IF{$Xub \cap \mathbb{[ \,\textnormal{0},\textnormal{range}^{\textnormal{\ensuremath{2}}}] \,} =  \emptyset $}
 \RETURN $\textnormal{OUT}$
