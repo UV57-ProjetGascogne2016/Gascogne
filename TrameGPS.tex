@@ -15,11 +15,10 @@ In order to get the GPS coordinates of each robots we decided to use the \textit
      UTC & Data status & Latitude & N or S & Longitude & E or W & Speed (knots) & Track made good &  UT Date & Magnetic Variation & E or W and Checksum \\ \hline
 
 \end{tabular}
-\end{center}
-
+\end{center}\\
 The most valuable data are the latitude, the longitude, the speed over ground (in knots) ant the time stamp. In order to get those different data, we used the python package pynmea, which allows to easily get and parse a GPS sentence. \\
 However, the longitude and latitude obtained using this specific sentence have a particular structure that we had to changed to make them easier to manipulate and compute in our algorithm. The example below show how the longitude and latitude are originally formatted :
-\\
+\
 \begin{itemize}
   \item Longitude  : \textit{12311.12,W} which means Longitude 123 degree. 11.12 min West
   \item Latitude : \textit{4916.45,N} which means Latitude 49 degree 16.45 min North
