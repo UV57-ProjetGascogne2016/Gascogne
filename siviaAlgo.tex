@@ -21,6 +21,7 @@
     \STATE Object $France$
     \STATE Object $Erosion$
     \STATE Object $Robots$
+    \STATE Float $Precision$
   \end{algorithmic}
   \bigskip
 
@@ -28,21 +29,17 @@
   \begin{algorithmic}[1]
 
     \STATE Boxes $France U Robots U Erosion$
-    \STATE Boxes $France$
-   	\STATE Boxes $Robots U Erosion$
-   	\STATE Boxes $Sea$
+    \STATE Boxes $Robots U Erosion$
+    \STATE Boxes $Sea$
   \end{algorithmic}
   \bigskip
   
   \textbf{Initialization}% Initialization section
   \begin{algorithmic}[1]
-   	\STATE $stack\gets deque([IntervalVector(X0)])$
-	\STATE $lf\gets LargestFirst(eps/2.0)$
-	\STATE $k\gets 0$ 
-	\STATE $BoxesFranceURobotsUErosion\gets []$
-	\STATE $BoxesFrance\gets []$
-	\STATE $BoxesRobotsUErosion\gets []$
-	\STATE $BoxesSea\gets []$
+   	\STATE $stack\gets \mathbb{R^{\textnormal{\ensuremath{n}}}}$
+	\STATE $BoxesFranceURobotsUErosion\gets \mathbb{R^{\textnormal{\ensuremath{n}}}}$
+	\STATE $BoxesRobotsUErosion\gets \mathbb{R^{\textnormal{\ensuremath{n}}}}$
+	\STATE $BoxesSea\gets \mathbb{R^{\textnormal{\ensuremath{n}}}}$
   \end{algorithmic}
   
 \end{algorithm}
@@ -52,49 +49,31 @@
 
 \newpage
 
-\vfill
-
 
 \begin{algorithm}
   \caption{SIVIA algorythm (continued)}
   \begin{algorithmic}
-	\WHILE{len(stack)}
+	\WHILE{len of stack >0}
 	
 		\vspace{0.3 cm}
 	
-  		\STATE $X\gets stack.popleft()$
+  		\STATE $X\gets Interval \hspace{0.1cm} Vector \hspace{0.1cm} of \hspace{0.1cm} stack$
 		\STATE $FranceTest\gets France.function(X)$
 		\STATE $ErosionTest\gets Erosion.function(X)$ 
 		\STATE $RobotsTest\gets Robots.function(X)$
 
 		\vspace{0.3 cm}
 
-  		\textcolor{blue}{//Obtain the 4 corners of each box in pixel:}\
-  		 
-  		
-  		\STATE $i,j\gets France.toPixels(X[0].lb(),X[1].ub())$
-		\STATE $i1,j1\gets France.toPixels(X[0].ub(),X[1].ub())$
-		\STATE $i2,j2\gets France.toPixels(X[0].ub(),X[1].lb())$ 
-		\STATE $i3,j3\gets France.toPixels(X[0].lb(),X[1].lb())$
-		\vspace{0.3 cm}
-		
-	 	\textcolor{blue}{//If we are in the France, robots or erosion:}\
+  	 	\textcolor{blue}{//If we are in the France, robots or erosion:}\
 	 	
 	 	\IF{FranceTest==IBOOL.IN or ErosionTest == IBOOL.IN or RobotsTest == IBOOL.IN}
-     		\STATE $BoxesFranceURobotsUErosion.append([[i,j],[i1,j1],[i2,j2],[i3,j3]]);$
-     		\vspace{0.3 cm}
+     	  	\STATE $Add \hspace{0.1cm} X \hspace{0.1cm} to \hspace{0.1cm} BoxesFranceURobotsUErosion$
      	
-     	\textcolor{blue}{//If we are in the France:}\
-
-	 	 \IF{FranceTest==IBOOL.IN}
-     		\STATE BoxesFrance.append([[i,j],[i1,j1],[i2,j2],[i3,j3]]);
-	 	\ENDIF
-	 	
 	 	\vspace{0.3 cm}
 	 	
 	 	\textcolor{blue}{//If we are in the robots or erosion:}\
 	 	 \IF{RobotsTest == IBOOL.IN or ErosionTest == IBOOL.IN}
-     		\STATE $BoxesRobotsUErosion.append([[i,j],[i1,j1],[i2,j2],[i3,j3]]);$
+     		\STATE $Add \hspace{0.1cm} X \hspace{0.1cm} to \hspace{0.1cm} BoxesRobotsUErosion$
 	 	 
 	
 	 	 \ENDIF
@@ -103,23 +82,24 @@
      		
      	\textcolor{blue}{//Else if we are outside all:}\
 	 	 \ELSIF{ $FranceTest = IBOOL.OUT and  ErosionTest = IBOOL.OUT and RobotsTest = IBOOL.OUT$}
-	 	 \STATE BoxesSea.append([[i,j],[i1,j1],[i2,j2],[i3,j3]]);
+	 	 \STATE $Add \hspace{0.1cm} X \hspace{0.1cm} to \hspace{0.1cm} BoxesSea$
 	 	 
      	\ELSE
      
-     			\IF{$X.maxdiam()\geq eps$}
-          			\STATE $(X1, X2)\gets lf.bisect(X)$
-          			\STATE $stack.append(X1)$
-         			\STATE $stack.append(X2)$
+      	\vspace{0.3 cm}
+     			\IF{Size \hspace{0.1cm} of \hspace{0.1cm} X > eps}
+          			\STATE $(X1, X2)\gets cut \hspace{0.3cm}  X$
+          			\STATE $Add \hspace{0.3cm}  X1 \hspace{0.3cm}  in \hspace{0.3cm}  stack$
+         			\STATE $Add \hspace{0.3cm}  X2 \hspace{0.3cm}  in \hspace{0.3cm}  stack$
          		\ENDIF
          	
   		\ENDIF
+  		 \vspace{0.3 cm}
  	 \ENDWHILE 
 	
 	\vspace{0.3 cm}
 	
-  \STATE $vibes.axisEqual()$\\
-  return BoxesFranceURobotsUErosion,BoxesFrance,BoxesRobotsUErosion,BoxesSea
+  return BoxesFranceURobotsUErosion,BoxesRobotsUErosion,BoxesSea
 
 
   \end{algorithmic}
