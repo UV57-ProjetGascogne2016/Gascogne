@@ -12,7 +12,9 @@ The code which have been implemented for this part of the project can be sum up 
 
 As you can see, there are 5 main script that are used in order to run the whole program.
 
-For are used in order to implement a part of the functions needed in order to fulfil our purpose:
+\medskip
+
+Four are used in order to implement only a part of the functions needed :
 \begin{itemize}
 
 \item \textbf{GPS2.py}: this script has been implemented by \textcolor{blue}{\textit{Pierre JACQUOT}} and allow us to get access to the GPS signal of all the robots. This program catch the first available GPS tram of each robot, put it in a numpy array. The parameters which are kept are the latitude, the longitude, the speed, the north, the east and the time. The current version allows us to realize a multi-threading program in order to get every GPS positions. In order to call every function, we have to instantiate an object call \textbf{\textit{"ThreadGPSAll"}}
@@ -22,9 +24,9 @@ For are used in order to implement a part of the functions needed in order to fu
 
 \end{itemize}
 
-The last one is here in order to organize the whole program and it's called ServeurSimu.py.
+\medskip
 
-It use one thread in order to :
+The last one is here in order to organize the whole program and it's called ServeurSimu.py. It use one thread in order to :
 \begin{itemize}
 \item Get the current GPS positions of every robots
 \item Get the new elliptic trajectory and give the instructions to every robots
@@ -35,6 +37,8 @@ It use one thread in order to :
 The other thread is here in order to allow a communication between the robots and the program which has to run the secure zone processing algorithm.
 
 This script is the master and all the other script are just intermediary in order to regulate the robots. 
+
+\medskip
 
 The following picture sum up how this script organize the whole program.
 
