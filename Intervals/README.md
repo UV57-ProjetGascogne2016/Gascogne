@@ -40,4 +40,14 @@ and add the flags in the CMakeList.txt (there is on the one from the correct ver
 of pyIbex, but there are some personal computer self adding so it may not work with yours
 so download the CMakeList from benEnsta/pyIbex then add the c11++ flags - an example will be found in my version of the CMakeList)
 
+
+Available Functions in python in relation to Gascogne Project:
+
+ - testR(IntervalVector\[2\] box to test,\[\[Interval,Interval\]\] watch robot positions,range2,is_efficient)
+ - class clSIVIA(image as list of list,size of erode Kernel (2*i+1),type of erosion (0,1,2) as (rectangle,cross,ellipse),iteration of erode)
+
+		setRecord(name,fps,do_draw_rectangle) recording of video
+		setErode(do_erode) (procede to erosion after SIVIA or not)
+		setScreening(do_draw_rectangle) showing of result
+		stopScreening()
  
