@@ -63,7 +63,7 @@ if __name__ == '__main__':
     #Solver creation
     clsivia = pyIbex.clSIVIA(image,1,2,1)#mask,size kernel (2*i+1),0 1 2 type of erosion (rectangle,cross,ellipse),iteration erosion
     clsivia.setRecord("test_video_via_server_0.avi",25.0,True)#name,fps,draw rectangle
-    #
+    clsivia.setScreening(True)
     
     #Loop
     t_old = time.time()

@@ -43,6 +43,7 @@ if __name__ == '__main__':
 
     clsivia = pyIbex.clSIVIA(image,1,2,1) # (image, kernelSize, erosion_elem, iteration)
     clsivia.setRecord("test_video_via_server_0.avi",25.0,True)
+    clsivia.setScreening(True)
     #Loop
     t_old = 0
     while (1):

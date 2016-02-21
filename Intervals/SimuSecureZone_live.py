@@ -19,7 +19,7 @@ enemySpeed = 100 # in m/s
 if __name__ == '__main__':
     # Initialisation Simulation
     nbsRobots = 10
-    simu = SimulationControl(nbsRobots,550,20)
+    simu = SimulationControl(nbsRobots,550,1,500,200)
     theta_i = 0 # initial angle of the ellipse
     l_i = 0.1 # initial major axis of the ellipse
     centre_i = np.array([[0],[0]]) # initial center of the ellipse
@@ -54,8 +54,9 @@ if __name__ == '__main__':
 
     accPixelErode = 0 # accumulator of pixel to erode
     #Solver creation
-    clsivia = pyIbex.clSIVIA(image,1,0)
+    clsivia = pyIbex.clSIVIA(image,1,2,3)
     clsivia.setRecord("test_video.avi",25.0,True)
+    clsivia.setScreening(True)
     #Loop
     for t in np.arange(0,simu.Tf,simu.dt):
         print("Time :",t," / ", simu.Tf/simu.dt)

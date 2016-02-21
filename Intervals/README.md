@@ -13,20 +13,13 @@ This folder group work on calculating Set of Interval Vector:
 
  - testASIVIA.py same as fisrt one but saving all the boxes
 
- - test2.py use only test in C++ to compute all paving (option to not compute some boxes to gain speed)
-
- - sivia_comp.py clean example on how to call sivia computing function
-
- - fusion_sivia.py testcase fusion unchanging image with the precedente sivia (creating an object clSIVIA as a solver fully implemented in c++)
-
- - robotiqueMobile.py testcase fusion with all computing is in c++ with video recording without VIBES (can be added as SIVIA return boxes)
-
  - SimuSecureZone_live.py test with controled robot around an ellipse
 
  - Simulation_Server.py server that send positions of robots upon request (robots controled as in SimuSecureZone__live.py)
 
  - Simulation_Client.py client which ask for position then proceed to compute the SecureZone (using Client.py for connexion to the server)
 
+ - Client_real.py client for test in ENSTA Bretagne (expecting UTM coords)
 
 ----------------------
 How to use with pyIbex
