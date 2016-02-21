@@ -65,14 +65,25 @@ The test can be found in the algorithm ~\ref{alg:one_boat_alg} which take a box 
 \end{tabular}
 \end{center}
 
-The test~\ref{alg:one_boat_alg} need to invert a thick set created by the function in use, here it is the euclidean norm for interval:
- \[ f : \mathbb{R^{\textnormal{\ensuremath{2}}}} \rightarrow \mathbb{R} \]
-   \[x \rightarrow \|X-m\|^{\textnormal{\ensuremath{2}}}\]
-   
- Where: 
- \[f^{\textnormal{\ensuremath{-}}} = (X[0]-m[0])^{\textnormal{\ensuremath{2}}}+(X[1]-m[1])^{\textnormal{\ensuremath{2}}}\] 
-\[f^{\textnormal{\ensuremath{+}}} = max((X[0]-m[0].lb())^{\textnormal{\ensuremath{2}}},(X[0]-m[0].ub())^{\textnormal{\ensuremath{2}}}) + \
-                  max((X[1]-m[1].lb())^{\textnormal{\ensuremath{2}}},(X[1]-m[1].ub())^{\textnormal{\ensuremath{2}}})\] 
+The test~\ref{alg:one_boat_alg} need to invert a thick set created by the function in use, here it is the euclidean norm for interval, the bounds of the thick function are used in algorithm~\ref{alg:one_boat_alg} to compute the set inversion:
+
+
+\begin{displaymath}
+f:
+\left|
+  \begin{array}{rcl}
+     \mathbb{R^{\textnormal{\ensuremath{2}}}}  & \longrightarrow &\mathbb{R} \\
+    X & \longmapsto & \|X-m\|^{\textnormal{\ensuremath{2}}}\\
+  \end{array}
+\right.
+\end{displaymath}
+Where:
+ \[f^{\textnormal{\ensuremath{-}}}(X) = (X[0]-m[0])^{\textnormal{\ensuremath{2}}}+(X[1]-m[1])^{\textnormal{\ensuremath{2}}}\] 
+\[f^{\textnormal{\ensuremath{+}}}(X) = max((X[0]-m[0]^{\textnormal{\ensuremath{-}}})^{\textnormal{\ensuremath{2}}},(X[0]-m[0]^{\textnormal{\ensuremath{+}}})^{\textnormal{\ensuremath{2}}}) + \
+                  max((X[1]-m[1]^{\textnormal{\ensuremath{-}}})^{\textnormal{\ensuremath{2}}},(X[1]-m[1]^{\textnormal{\ensuremath{+}}})^{\textnormal{\ensuremath{2}}})\]
+
+
+See paragraph 4.5 in \cite{jaulin2010resolution} for the computation of the bounds.
 
 \begin{algorithm}[H]
 \caption{Is $\mathbf{X} \subseteq \mathbb{S}_m$ , $\mathbb{S}_m =$ Secured Zone by boat $m$ and $\mathbf{X} \in \mathbb{R^{\textnormal{\ensuremath{2}}}}$ }
@@ -89,7 +100,7 @@ The test~\ref{alg:one_boat_alg} need to invert a thick set created by the functi
 \ELSIF {$Xub \subseteq \mathbb{[ \,\textnormal{0},\textnormal{range}^{\textnormal{\ensuremath{2}}}] \,} $}
 \RETURN $\textnormal{IN}$
 \ELSE
-\IF{ $\textnormal{range}^{\textnormal{\ensuremath{2}}} - Xp.ub() < \textnormal{0}] $}
+\IF{ $\textnormal{range}^{\textnormal{\ensuremath{2}}} - Xp^{\textnormal{\ensuremath{-}}} < \textnormal{0} $}
 \IF{ $Xm - \textnormal{range}^{\textnormal{\ensuremath{2}}} \subseteq \mathbb{[ \,-\infty,\textnormal{0}] \,}$}
 \RETURN $\textnormal{MAYBE}$ \label{op1}
 \ELSE
@@ -102,6 +113,7 @@ The test~\ref{alg:one_boat_alg} need to invert a thick set created by the functi
 \end{algorithmic}
 \end{algorithm}
 
+
 The solution of the zone covered by the boat resemble to the figure~\ref{fig:SecureZoneMAYBEOneBoat}, and by seeing the size of the boxes (there are less boxes) in the uncertain zone it is sure that the computation was efficient:
 
 \begin{figure}[H]
@@ -110,6 +122,45 @@ The solution of the zone covered by the boat resemble to the figure~\ref{fig:Sec
     \caption{Zone secured by one boat in red, orange zone is uncertain, yellow is the border and blue is not secured.}
     \label{fig:SecureZoneMAYBEOneBoat}
 \end{figure}
+
+In order to easily apprehend the algorithm~\ref{alg:one_boat_alg} the figures~\ref{fig:IN_algo},~\ref{fig:OUT_algo},~\ref{fig:MAYBE_algo},~\ref{fig:UNKNOWN_algo} and~\ref{fig:UNKNOWN2_algo} represent in a graphics way the upper and lower bound of the function f:
+
+\begin{figure}[H]
+\centering
+    \begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[scale=0.6,angle=0]{IN_algo.png}
+    \caption{Representation of the interval bound of an IN box.}
+    \label{fig:IN_algo}
+    \end{minipage}
+    \begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[scale=0.6,angle=0]{OUT_algo.png}
+    \caption{Representation of the interval bound of an OUT box.}
+    \label{fig:OUT_algo}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+    \begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[scale=0.8,angle=0]{UNKNOWN_algo.png}
+    \caption{Representation of the interval bound of a box at the border between the secured zone and the uncertain zone.}
+    \label{fig:UNKNOWN_algo}
+    \end{minipage}
+    \begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[scale=0.8,angle=0]{UNKNOWN2_algo.png}
+    \caption{Representation of the interval bound of a box at the border between the Out zone and the uncertain zone.}
+    \label{fig:UNKNOWN2_algo}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+    \includegraphics[scale=0.8,angle=0]{MAYBE_algo.png}
+    \caption{Representation of the interval bound of a box in the uncertain zone.}
+    \label{fig:MAYBE_algo}
+\end{figure}
+
+The intervals representing $[\,f]\,^{\textnormal{\ensuremath{-}}}(X)$ and $[\,f]\,^{\textnormal{\ensuremath{+}}}(X)$ are draw arbitrary in size and position, for example  $[\,f]\,^{\textnormal{\ensuremath{-}}}(X)$ and $[\,f]\,^{\textnormal{\ensuremath{+}}}(X)$ can overlap (except in figure~\ref{fig:MAYBE_algo}) what is important is the relative position of their bounds compared to the bounds of [0,range$^{2}$].\newline
 
 Now that the algorithm is working for on boat, other can be added:
 
@@ -187,7 +238,7 @@ $(X,range,m)}\}_{m\in M}$
 
 
 Those last changes make the computation of the zone more efficient and correct, in figure~\ref{fig:SecureZoneFourBoat} there is no more overlapping of the external border.\\
-If the uncertain zone is not needed the computation of the algorithm SIVIA can be accelerated by ignoring it. This can be done by changing the return value in the operand~\ref{op0} in the algorithm~\ref{alg:one_boat_alg} from UNKNOWN2 to OUT and the return value in the operand~\ref{op1} from MAYBE to OUT (the second change will not improve efficiency but just place the box in the right set), the result can be observed in figure~\ref{fig:SecureZoneFourFastBoat}.
+If the uncertain zone is not needed the computation of the algorithm SIVIA can be accelerated by ignoring it. This can be done by changing the return value in the operand~\ref{op0} in the algorithm~\ref{alg:one_boat_alg} from UNKNOWN2 to OUT and the return value in the operand~\ref{op1} from MAYBE to OUT (the second change will not improve efficiency but just place the boxes in the right set), the result can be observed in figure~\ref{fig:SecureZoneFourFastBoat}.
 
 \begin{figure}[H]
 \centering
