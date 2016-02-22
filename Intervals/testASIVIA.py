@@ -4,10 +4,10 @@ Test case 0: Tolerable-United solutions sets.
 """
 # ThickBox_inv.py
 from pyIbex import *
-from SIVIA import *
 from vibes import vibes
 import math
 import time
+import sys
 
 def subMove(x,y,v,p,u,h):
     xp = v*math.cos(p)
@@ -29,9 +29,21 @@ def listBoxToDraw(boxes):
     return drawable
 
 if __name__ == '__main__':
-    # define the precision of your 
+
     r = 10
     epsilon = 1
+    efficient = True
+    
+    if (len(sys.argv) > 1):
+        efficient = (sys.argv[1] == 'True')
+    if (len(sys.argv) > 2):
+        r = int(sys.argv[2])
+    if (len(sys.argv) > 3):
+       epsilon = float(sys.argv[3])
+
+    rang2 = r**2
+    print(rang2)
+    # define the precision of your 
     vibes.beginDrawing()    
     X0 = IntervalVector([[-100, 100], [-100, 100]])
     Ipos = Interval(-2.5,2.5)
@@ -64,32 +76,22 @@ if __name__ == '__main__':
 
     vibes.beginDrawing()
     vibes.newFigure('Zone de non detection')
-    vibes.setFigureProperties({'x':500, 'y':100, 'width':800, 'height':800})
-    
-    # # test unitaire
-    # m= [[cx1 , cy1 ],[cx2, cy2],[cx3, cy3]]
-    # pdc = test3(m)
-    # #vibes.clearFigure()
-    # SIVIA(X0, pdc, 0.5)
-    # 
-    # for m_ in m:
-    #     vibes.drawCircle(m_[0].mid(), m_[1].mid(), 0.2, '[k]')
-    # vibes.drawArrow([-15, -15], [-15, -10], 1, 'w[w]')
-    # vibes.drawArrow([-15, -15], [-10, -15], 1, 'w[w]')
-    
+    vibes.setFigureProperties({'x':500, 'y':100, 'width':800, 'height':800})    
     
     for t in range(10):
         time1 = time.time()
         m= [[cx1 , cy1 ],[cx2, cy2],[cx3, cy3]]
-        pdc = (m,100,True)
         vibes.clearFigure()
-        box = pyIbex.SIVIAtest(X0,m,100,1,True)
-        print(type(box),len(box))
+        lbox = pyIbex.fSIVIAtest(X0,m,rang2,epsilon,efficient)
+        print(type(lbox),len(lbox))
+        vibes.drawBoxesUnion(listBoxToDraw(lbox[0]),'[r]')
+        vibes.drawBoxesUnion(listBoxToDraw(lbox[1]),'[b]')
+        vibes.drawBoxesUnion(listBoxToDraw(lbox[2]),'[orange]')
+        vibes.drawBoxesUnion(listBoxToDraw(lbox[3]),'[y]')
         for m_ in m:
             vibes.drawCircle(m_[0].mid(), m_[1].mid(), 0.5, '[k]')
         vibes.drawArrow([-15, -15], [-15, -10], 1, 'w[w]')
         vibes.drawArrow([-15, -15], [-10, -15], 1, 'w[w]')
-        vibes.drawBoxesUnion(listBoxToDraw(box),'[r]')
         cx1,cy1,v1,p1 = subMove(cx1,cy1,v1,p1,u1,h)
         cx2,cy2,v2,p2 = subMove(cx2,cy2,v2,p2,u2,h)
         cx3,cy3,v3,p3 = subMove(cx3,cy3,v3,p3,u3,h)
