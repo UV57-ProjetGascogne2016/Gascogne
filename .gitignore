@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 *.aux
 *.log
 *.out
 *.toc
 *~
+=======
+*~
+*__
+
+>>>>>>> origin/SecureZoneImageProcessing
