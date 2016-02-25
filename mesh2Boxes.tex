@@ -29,9 +29,9 @@ Then, we use this integral image in our SIVIA test to say if the tested box is i
 \begin{algorithmic}[1]
 \REQUIRE $X$,$IntegralImage$\\
 $i_A$ \gets \textnormal{$round(X[0].lb()/echellePixel) + i0$}
-$j_A$ \gets \textnormal{$round(X[1].ub()/echellePixel) + i0$}
+$j_A$ \gets \textnormal{$round(X[1].ub()/echellePixel) + j0$}
 $i_C$ \gets \textnormal{$round(X[0].ub()/echellePixel) + i0$}
-$j_C$ \gets \textnormal{$round(X[1].lb()/echellePixel) + i0$}
+$j_C$ \gets \textnormal{$round(X[1].lb()/echellePixel) + j0$}
 $nbsPixel$ \gets \textnormal{$(i_C - i_A) * (j_C - j_A)$}
 $sumPixel$ \gets \textnormal{$V(D) + V(A) - V(B) - V(C)$}
 \IF \textnormal{$sumPixel == 0$}\\
