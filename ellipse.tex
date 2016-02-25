@@ -1,0 +1,25 @@
+%\section{Evolution of the elliptic trajectory}
+\textcolor{blue} {Rafael FINKELSTEIN \& Thiago OLIVEIRA RODRIGUES}
+
+
+The goal of this part was to choose an approach to secure the Bay of Biscay with a configurable number of robots. The technique chosen was to dispose the robots around an ellipse and rotate and translate this ellipse in a way the robots would secure all the region of the bay until reach a final position.  The process to calculate the trajectory of each robot is divided in two basic parts. The first part is the evolution of ellipse’s parameters such as relative centre position, angle of inclination and ellipse’s major axe. The other part is the calculation of the ellipse and the robot’s position in it.
+\vspace*{0.5cm}
+
+
+In order to calculate the way points, the points where the ellipse path should pass through, it was chosen some GPS coordinates to be the extremal points of the ellipse, in other words, the closest that the robots will need to go to the coast. After the transformation of the extremal points from GPS coordinates to the system coordinates it is possible to geometrically calculate the ellipse’s parameters (x and y centre, inclination angle and major axe length).
+\vspace*{0.5cm}
+
+
+Knowing the way points, in each time step the ellipse grows and rotates linearly until it reaches the next way point. When the last way point is reached it means that all Bay of Biscay is secured and the robots keep moving around the last ellipse creating a barrier that makes impossible to pass through without entering the zone secured by some robot.
+\vspace*{0.5cm}
+
+To calculate the robot target position, each robot was disposed with an equal distance in between the others in the perimeter of a circle, in this circle it was applied the matrix of linear transformation and the rotation matrix. Those values are send to a log that in the field will be used to control the real robots.
+\vspace*{0.5cm}
+
+%\begin{figure}[!htb]
+%	\begin{center}
+%		\includegraphics[scale=0.4]{ellipse.png} 
+%		\caption{\label{Evolution of the elliptic trajectory} Final ellipse}
+%	\end{center}
+%\end{figure}
+
