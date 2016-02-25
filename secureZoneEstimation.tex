@@ -11,7 +11,7 @@ For example, consider the function f :
 \STATE $\mathbf{x} \rightarrow \mathbf{x}+ \mathbb{[ \,\textnormal{1},\textnormal{2}] \,}$
 \end{algorithmic}
 
-If the width of x is null (ex: [1,1]) the width of f(x) will be strictly greater than zero ([2,3]) (see figure~\ref{fig:thickFunction}).
+If the width of x is null (ex: [1,1]) the width of f(x) would still be strictly greater than zero ([2,3]) (see figure~\ref{fig:thickFunction}).
 
 A thick function can be consider as an interval of classical function with the same principal properties like an lower bound and an upper bound, [f] is equal to [$f^{\textnormal{\ensuremath{-}}}$,$f^{\textnormal{\ensuremath{+}}}$]  where $f^{\textnormal{\ensuremath{-}}}$ is the lower bound function and $f^{\textnormal{\ensuremath{+}}}$ is the upper one. See the example for  a function from $\mathbb{R} $ in$ \mathbb{R} $ :
 
@@ -49,7 +49,7 @@ The figure~\ref{fig:SecureZoneOneBoat} shows the zone covered by the surveillanc
 \subsection{Test for Biscay Bay Surveillance}
 For all this section we consider that for all $\mathbf{X} \in \mathbb{R^{\textnormal{\ensuremath{2}}}}$,  $\mathbf{X}$ is included in the bay of Biscay (the set $\mathbb{G}$) in order to facilitate the comprehension.\\
 The figure~\ref{fig:SecureZoneOneBoat} shows that the zone covered by the boats can be found but it also point out that the computing of the zone is not efficient, the uncertain zone cannot be classify as out or in the secured zone so the SIVIA algorithm cut the boxes to their minimal size even if it is possible to know their status of uncertainty thus proceeding to more computation than needed. A new test is required instead of a simple separator to allow a faster and cleaner computation of the secured zone.
-The test can be found in the algorithm ~\ref{alg:one_boat_alg} which take a box (an element of $\mathbb{R}^{\textnormal{\ensuremath{2}}}$)) and determine its status, the state can vary between six status where for now the border regroup more or less three status as it can be seen in the following table:
+The test can be found in the algorithm~\ref{alg:one_boat_alg} which take a box (an element of $\mathbb{R}^{\textnormal{\ensuremath{2}}}$)) and determine its status, the state can vary between six status where for now the border regroup more or less three status as it can be seen in the following table:
 
 \begin{center}
 \begin{tabular}{|m{0.10\linewidth}|m{0.15\linewidth}|m{0.5\linewidth}|}
@@ -160,9 +160,9 @@ In order to easily apprehend the algorithm~\ref{alg:one_boat_alg} the figures~\r
     \label{fig:MAYBE_algo}
 \end{figure}
 
-The intervals representing $[\,f]\,^{\textnormal{\ensuremath{-}}}(X)$ and $[\,f]\,^{\textnormal{\ensuremath{+}}}(X)$ are draw arbitrary in size and position, for example  $[\,f]\,^{\textnormal{\ensuremath{-}}}(X)$ and $[\,f]\,^{\textnormal{\ensuremath{+}}}(X)$ can overlap (except in figure~\ref{fig:MAYBE_algo}) what is important is the relative position of their bounds compared to the bounds of [0,range$^{2}$].\newline
+The intervals representing $[\,f]\,^{\textnormal{\ensuremath{-}}}(X)$ and $[\,f]\,^{\textnormal{\ensuremath{+}}}(X)$ are draw arbitrary in size and position, for example  $[\,f]\,^{\textnormal{\ensuremath{-}}}(X)$ and $[\,f]\,^{\textnormal{\ensuremath{+}}}(X)$ can overlap (except in figure~\ref{fig:MAYBE_algo}), what is important is the relative position of their bounds compared to the bounds of [0,range$^{2}$].\newline
 
-Now that the algorithm is working for on boat, other can be added:
+Now that the algorithm is working for one boat, other can be added:
 
 \begin{figure}[H]
 \centering
