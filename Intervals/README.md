@@ -43,4 +43,6 @@ Available Functions in python in relation to Gascogne Project:
 		setErode(do_erode) (procede to erosion after SIVIA or not)
 		setScreening(do_draw_rectangle) showing of result
 		stopScreening()
+                limSIVIA (proceed to a SIVIA without returning boxes)
+                imSIVIA (proceed to a SIVIA with returning boxes) this function can cuse memory leak because of failure or the pytho garbage collector
  

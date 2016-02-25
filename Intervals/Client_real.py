@@ -92,7 +92,7 @@ if __name__ == '__main__':
             print("acc erode :",accPixelErode)
         #SIVIA:
         time1=time.time()
-        clsivia.imSIVIA(X0,m,radius**2,echellePixel,i0,j0,epsilon,True)
+        clsivia.limSIVIA(X0,m,radius**2,echellePixel,i0,j0,epsilon,True)
         print("SIVIA : ",time.time()-time1,"All : ",time.time()-t)
 
         t_old = t
