@@ -28,18 +28,18 @@ Then, we use this integral image in our SIVIA test to say if the tested box is i
 \label{alg:one_boat_alg}
 \begin{algorithmic}[1]
 \REQUIRE $X$,$IntegralImage$\\
-$i_A$ \gets \textnormal{$round(X[0].lb()/echellePixel) + i0$}
-$j_A$ \gets \textnormal{$round(X[1].ub()/echellePixel) + j0$}
-$i_C$ \gets \textnormal{$round(X[0].ub()/echellePixel) + i0$}
-$j_C$ \gets \textnormal{$round(X[1].lb()/echellePixel) + j0$}
-$nbsPixel$ \gets \textnormal{$(i_C - i_A) * (j_C - j_A)$}
-$sumPixel$ \gets \textnormal{$V(D) + V(A) - V(B) - V(C)$}
-\IF \textnormal{$sumPixel == 0$}\\
-\RETURN \textnormal{$OUT$}\\
-\ELSIF \textnormal{$sumPixel == nbsPixel$} 
-\RETURN \textnormal{$IN$}
+$i_A \leftarrow \textnormal{round(X[0].lb()/echellePixel) + i0}$\\
+$j_A \leftarrow \textnormal{round(X[1].ub()/echellePixel) + j0}$\\
+$i_C \leftarrow \textnormal{round(X[0].ub()/echellePixel) + i0}$\\
+$j_C \leftarrow \textnormal{round(X[1].lb()/echellePixel) + j0}$\\
+$ \textnormal{nbsPixel} \leftarrow (i_C - i_A) * (j_C - j_A)$\\
+$ \textnormal{sumPixel} \leftarrow \textnormal{V(D) \ensuremath{+} V(A) \ensuremath{-} V(B) \ensuremath{-} V(C)}$
+\IF {$\textnormal{sumPixel == 0}$}
+\RETURN $\textnormal{OUT}$
+\ELSIF {$\textnormal{sumPixel == nbsPixel}$}
+\RETURN $\textnormal{IN}$
 \ELSE
-\RETURN \textnormal{$UNKNOWN$}
+\RETURN $\textnormal{UNKNOWN}$
 \ENDIF
 \end{algorithmic}
 \end{algorithm}

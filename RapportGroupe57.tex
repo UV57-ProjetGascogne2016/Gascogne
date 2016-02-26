@@ -1,0 +1,115 @@
+\documentclass[12pt,fleqn]{report} %taille de la police par défaut, et équations jusitifées à gauche
+\input{packages}     % Ce fichier contient tous les packages nécessaires à la compilation
+
+\begin{document}
+\renewcommand{\contentsname}{Contents}	% Nom pour la table des matières
+\renewcommand{\bibname}{Bibliography}	% Nom pour les références bibliographiquessss
+
+
+%----------------------------------------------------------------------------------------
+%	PAGE DE GARDE
+%----------------------------------------------------------------------------------------
+\input{PageDeTitre}
+
+
+%----------------------------------------------------------------------------------------
+%	SOMMAIRE
+%----------------------------------------------------------------------------------------
+\tableofcontents  % Imprime le sommaire
+\cleardoublepage  % pour commencer sur une page impaire
+
+
+%----------------------------------------------------------------------------------------
+%	Préambules
+%----------------------------------------------------------------------------------------
+\chapter*{Acknowledgement}
+\addcontentsline{toc}{chapter}{Acknowledgement}
+\input{Remerciements}
+
+
+%----------------------------------------------------------------------------------------
+%	PART I 
+%----------------------------------------------------------------------------------------
+\chapter{Introduction}
+\input{introduction}
+
+
+%----------------------------------------------------------------------------------------
+%	PART II 
+%----------------------------------------------------------------------------------------
+\chapter{Secure zone processing}
+
+\section{Introduction to interval analysis}
+\input{intervalAnalysis}
+
+\section{Secure zone estimation with interval analysis}
+\input{secureZoneEstimation}
+
+\section{Map generation and origin estimation}
+\input{MapGen}
+
+\section{Mesh to boxes functions}
+\input{mesh2Boxes}
+
+\section{Erosion functions}
+\input{erosion}
+
+\section{Global Sivia algorithm}
+\input{siviaAlgo}
+
+\section{Results}
+\input{secureZoneResults}
+
+
+%----------------------------------------------------------------------------------------
+%	PART III 
+%----------------------------------------------------------------------------------------
+\chapter{Robots regulation}
+
+\section{Regulation}
+\input{regulation}
+
+\section{Evolution of the elliptic trajectory}
+\input{ellipse}
+
+\section{Conversion of the order to a PWM command}
+\input{conversionPWM}
+
+
+%----------------------------------------------------------------------------------------
+%	PART IV 
+%----------------------------------------------------------------------------------------
+\chapter{Implementation with buggy robots}
+\section{Hardware}
+\input{materiel}
+\section{GPS Sentence Analysis}
+\input{trameGPS}
+\section{Structure of the programming code}
+\input{descriptionCode}
+\section{Results}
+\input{resultat}
+
+%----------------------------------------------------------------------------------------
+%	PART V 
+%----------------------------------------------------------------------------------------
+%\chapter*{Conclusion}
+%\addcontentsline{toc}{chapter}{Conclusion}
+%\input{conclusion}
+
+%----------------------------------------------------------------------------------------
+\appendix
+\chapter*{Appendix}
+\addcontentsline{toc}{chapter}{Appendix}
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHIE
+%----------------------------------------------------------------------------------------
+\addcontentsline{toc}{part}{Bibliography}
+%\bibliographystyle{apalike-fr}
+\bibliographystyle{plain-fr}
+\bibliography{bibliographie}
+\nocite{*}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
