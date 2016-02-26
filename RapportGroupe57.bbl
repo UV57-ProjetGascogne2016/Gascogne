@@ -1,0 +1,13 @@
+\begin{thebibliography}{1}
+\expandafter\ifx\csname fonteauteurs\endcsname\relax
+\def\fonteauteurs{\scshape}\fi
+
+\bibitem{jaulin2010resolution}
+Luc \bgroup\fonteauteurs\bgroup Jaulin\egroup\egroup{} et Gilles
+  \bgroup\fonteauteurs\bgroup Chabert\egroup\egroup{} :
+\newblock Resolution of nonlinear interval problems using symbolic interval
+  arithmetic.
+\newblock {\em Engineering Applications of Artificial Intelligence},
+  23(6)\string:\penalty500\relax 1035--1040, 2010.
+
+\end{thebibliography}
